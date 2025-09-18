@@ -58,11 +58,24 @@ window.firebaseReady = (async () => {
     const firestore = getFirestore(firestoreApp);
 
     let analytics = null;
+    let analyticsStatus = 'loading';
+    
     // Analytics from primary app with correct measurement ID
     try {
-      analytics = (await isSupported()) ? getAnalytics(app) : null;
+      const isAnalyticsSupported = await isSupported();
+      if (isAnalyticsSupported) {
+        analytics = getAnalytics(app);
+        analyticsStatus = 'active';
+        console.info('[Analytics] ✅ Google Analytics initialized successfully');
+      } else {
+        analyticsStatus = 'unsupported';
+        console.info('[Analytics] ⚠️ Analytics not supported in this environment');
+      }
     } catch (e) {
-      console.warn("[Firebase] Analytics unavailable:", e?.message || e);
+      analyticsStatus = 'blocked';
+      const reason = e?.message?.includes('blocked') ? 'likely blocked by ad blocker' : e?.message || 'unknown error';
+      console.warn(`[Analytics] ❌ Analytics unavailable: ${reason}`);
+      console.info('[Analytics] 🔄 Website will continue operating without analytics');
     }
 
     Object.assign(window, {
@@ -71,6 +84,7 @@ window.firebaseReady = (async () => {
       firebaseAuth: auth, // From primary app
       firebaseFirestore: firestore, // From secondary app (Firestore only)
       firebaseAnalytics: analytics, // From primary app (G-S20D4FG0BE)
+      analyticsStatus: analyticsStatus, // Status for debugging
     });
 
     console.log("[Firebase] Initialized with hybrid setup:");
@@ -79,6 +93,27 @@ window.firebaseReady = (async () => {
       "  - Firestore app (Firestore only):",
       firestoreApp.options.projectId
     );
+    
+    // Add connectivity status helper
+    window.getConnectivityStatus = () => {
+      return {
+        firebase: !!window.firebaseApp,
+        firestore: !!window.firebaseFirestore,
+        analytics: analyticsStatus,
+        online: navigator.onLine,
+        timestamp: new Date().toISOString()
+      };
+    };
+    
+    // Log overall initialization status
+    const status = window.getConnectivityStatus();
+    console.log('[System] 🚀 Initialization complete:', {
+      firebase: status.firebase ? '✅' : '❌',
+      firestore: status.firestore ? '✅' : '❌', 
+      analytics: status.analytics === 'active' ? '✅' : status.analytics === 'blocked' ? '🚫' : '⚠️',
+      online: status.online ? '✅' : '❌'
+    });
+    
     return true;
   } catch (err) {
     console.error("[Firebase] Init failed:", err);
@@ -110,6 +145,30 @@ window.firebaseReady = (async () => {
   prefers.addEventListener("change", (e) => {
     if (!localStorage.getItem("darkMode")) apply(e.matches);
   });
+})();
+
+/* -------------------- NETWORK MONITORING -------------------- */
+(function networkMonitoring() {
+  // Monitor online/offline status
+  const handleOnline = () => {
+    console.info('[Network] 🌐 Connection restored');
+    // Could add UI notification here if needed
+  };
+  
+  const handleOffline = () => {
+    console.warn('[Network] 📡 Connection lost - some features may be limited');
+    // Could add UI notification here if needed
+  };
+  
+  window.addEventListener('online', handleOnline);
+  window.addEventListener('offline', handleOffline);
+  
+  // Add a debug command for checking status
+  window.checkConnectivity = () => {
+    const status = window.getConnectivityStatus?.() || { error: 'Not initialized' };
+    console.table(status);
+    return status;
+  };
 })();
 
 /* -------------------- UI zonder Firebase -------------------- */
@@ -208,9 +267,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   const firestore = window.firebaseFirestore;
   const logEvent = (...args) => {
     try {
-      if (window.firebaseAnalytics)
+      if (window.firebaseAnalytics) {
         gaLogEvent(window.firebaseAnalytics, ...args);
-    } catch {}
+      } else {
+        // Only log once when analytics is unavailable to avoid spam
+        if (!window._analyticsWarningLogged) {
+          console.info('[Analytics] 📊 Event skipped - analytics unavailable:', args[0]);
+          window._analyticsWarningLogged = true;
+        }
+      }
+    } catch (error) {
+      console.warn('[Analytics] Failed to log event:', args[0], error?.message || error);
+    }
   };
 
   /* ---------- Auth UI ---------- */
@@ -635,7 +703,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.head.appendChild(style);
       }
     } catch (error) {
-      console.error("Error loading news flash:", error);
+      console.error("[News Flash] Error loading from Firestore:", error?.message || error);
+      
+      // Provide helpful context for common network issues
+      if (error?.message?.includes('network') || error?.code === 'unavailable') {
+        console.info('[News Flash] 🌐 This appears to be a network connectivity issue');
+        console.info('[News Flash] 🔄 Displaying fallback content while connection is restored');
+      } else if (error?.code === 'permission-denied') {
+        console.warn('[News Flash] 🔒 Permission denied - check Firestore security rules');
+      }
+      
       renderNewsFlashFallback(flasherContent);
     }
   }
