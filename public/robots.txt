@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Sitemap for crawler discovery
+Sitemap: https://digestpaper.com/sitemap.xml
+

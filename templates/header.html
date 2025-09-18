@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <!-- Charset & viewport -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary SEO - DYNAMIC PLACEHOLDERS -->
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="author" content="DigestPaper Media">
+  <meta name="content-language" content="nl-NL">
+  <meta name="generator" content="DigestPaper CMS v2.0">
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="{{canonical_url}}">
+  <link rel="alternate" hreflang="nl" href="{{canonical_url}}">
+  <link rel="alternate" hreflang="nl-NL" href="{{canonical_url}}">
+  <link rel="alternate" hreflang="x-default" href="{{canonical_url}}">
+  <!-- Future multilingual support prepared -->
+  <!-- <link rel="alternate" hreflang="en" href="https://digestpaper.com/en/"> -->
+  <!-- <link rel="alternate" hreflang="en-US" href="https://digestpaper.com/en/"> -->
+  <!-- <link rel="alternate" hreflang="de" href="https://digestpaper.com/de/"> -->
+  <!-- <link rel="alternate" hreflang="fr" href="https://digestpaper.com/fr/"> -->
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{{og_type}}">
+  <meta property="og:site_name" content="DigestPaper Media">
+  <meta property="og:title" content="{{og_title}}">
+  <meta property="og:description" content="{{og_description}}">
+  <meta property="og:url" content="{{og_url}}">
+  <meta property="og:image" content="{{og_image}}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{og_title}}">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{twitter_title}}">
+  <meta name="twitter:description" content="{{twitter_description}}">
+  <meta name="twitter:image" content="{{twitter_image}}">
+  <meta name="twitter:image:alt" content="{{twitter_title}}">
+
+  <!-- App / UX hints -->
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+  <meta name="color-scheme" content="dark light">
+  <meta name="application-name" content="DigestPaper Media">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" href="/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/favicon-180x180.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon/favicon-512x512.png">
+
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Windows -->
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="msapplication-TileColor" content="#0f172a">
+  <meta name="msapplication-TileImage" content="/favicon/mstile-150x150.png">
+  <link rel="sitemap" type="application/xml" href="https://digestpaper.com/sitemap.xml">
+
+  <!-- Feeds -->
+  <link rel="alternate" type="application/rss+xml" title="DigestPaper — RSS" href="https://digestpaper.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="DigestPaper — Atom" href="https://digestpaper.com/atom.xml">
+
+  <!-- Verification -->
+  <meta name="google-site-verification" content="Bfdhhp4SUxy8XbOJEjulnFvHQey-cb-VpTGLKRSTQYo">
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firebasejs.googleapis.com">
+
+  <link rel="preload" as="image" href="/assets/digestpaper-media-logo.webp" fetchpriority="high">
+
+
+  <!-- Primary SEO (aanvullingen) -->
+  <meta name="keywords" content="{{keywords}}">
+  <meta name="news_keywords" content="{{keywords}}">
+
+  <!-- Open Graph (secure_url) -->
+  <meta property="og:image:secure_url" content="{{og_image}}">
+
+  <!-- Twitter -->
+  <meta name="twitter:site" content="@digestpaper">
+  <meta name="twitter:creator" content="@digestpaper">
+
+  <!-- Geo / ICBM -->
+  <meta name="geographic.region" content="NL">
+  <meta name="geographic.placename" content="Amsterdam">
+  <meta name="geographic.position" content="52.3728;4.8936">
+  <meta name="ICBM" content="52.3728, 4.8936">
+
+  <!-- Dublin Core -->
+  <meta name="dc.title" content="{{title}}">
+  <meta name="dc.creator" content="DigestPaper Media">
+  <meta name="dc.subject" content="{{keywords}}">
+  <meta name="dc.description" content="{{description}}">
+  <meta name="dc.publisher" content="DigestPaper Publishing">
+  <meta name="dc.format" content="text/html">
+  <meta name="dc.identifier" content="{{canonical_url}}">
+  <meta name="dc.language" content="nl-NL">
+  <meta name="dc.coverage" content="Nederland; EU; Wereldwijd">
+  <meta name="dc.rights" content="Copyright 2025 DigestPaper Publishing">
+
+  <!-- Google Fonts: preload + noscript fallback -->
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap">
+  </noscript>
+
+  {{extra_css}}
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script defer src="/js/theme.js"></script>
+
+  <link rel="security" href="/.well-known/security.txt">
+
+  <script defer src="/js/consent.js"></script>
+
+  <!-- /svg/icons.svg -->
+  <svg width="0" height="0" style="position: absolute;" aria-hidden="true">
+    <defs>
+      <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#6b21a8" />
+        <stop offset="100%" stop-color="#9333ea" />
+      </linearGradient>
+
+      <!-- Essential icons for navigation -->
+      <symbol id="icon-menu-projects" viewBox="0 0 24 24" role="img">
+        <path
+          fill="url(#icon-gradient)"
+          d="M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V5H19V19Z"
+        />
+      </symbol>
+
+      <symbol id="icon-menu-portfolio" viewBox="0 0 24 24" role="img">
+        <path
+          fill="url(#icon-gradient)"
+          d="M12,5A3.5,3.5 0 0,0 8.5,8.5A3.5,3.5 0 0,0 12,12A3.5,3.5 0 0,0 15.5,8.5A3.5,3.5 0 0,0 12,5Z"
+        />
+      </symbol>
+
+      <symbol id="icon-list-check" viewBox="0 0 24 24" role="img">
+        <path
+          fill="url(#icon-gradient)"
+          d="M7,19L2,14L3.4,12.6L7,16.2L20.6,2.6L22,4L7,19Z"
+        />
+      </symbol>
+
+      <symbol id="icon-menu-data" viewBox="0 0 24 24" role="img">
+        <path
+          fill="url(#icon-gradient)"
+          d="M3,3H21V5H3V3M3,7H15V9H3V7M3,11H21V13H3V11M3,15H15V17H3V15M3,19H21V21H3V19Z"
+        />
+      </symbol>
+
+      <symbol id="icon-folder-tree" viewBox="0 0 24 24" role="img">
+        <path
+          fill="url(#icon-gradient)"
+          d="M3,3H9L11,5H21V19H3V3M5,7V17H19V7H5Z"
+        />
+      </symbol>
+
+      <symbol id="icon-circle-half-stroke" viewBox="0 0 24 24" role="img">
+        <path
+          fill="url(#icon-gradient)"
+          d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22V2Z"
+        />
+      </symbol>
+
+      <!-- Add more essential icons as needed -->
+    </defs>
+  </svg>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {{structured_data}}
+  </script>
+  {{extra_js}}
+
+  <a href="#main" class="skip">Direct naar inhoud</a>
+
+  <header role="banner">
+    <div class="container hdr">
+      <div class="logo">
+        <picture>
+          <source srcset="/assets/digestpaper-media-logo.webp" type="image/webp">
+          <img src="/assets/digestpaper-media-logo.png" alt="DigestPaper Media logo" width="48" height="48"
+            loading="eager">
+        </picture>
+        <div>
+          <div class="brand">
+            <a href="https://digestpaper.com" target="_blank" rel="noopener noreferrer">DigestPaper.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile menu toggle -->
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Desktop navigation -->
+      <nav class="site-nav desktop-nav" aria-label="Hoofdnavigatie" itemscope itemtype="https://schema.org/ItemList">
+        <meta itemprop="name" content="Hoofdnavigatie">
+
+        <!-- Home link -->
+        <a href="/" class="nav-link">Home</a>
+
+        <!-- News link -->
+        <a href="/nieuws/" class="nav-link">Nieuws</a>
+
+        <!-- Projects -->
+        <div class="nav-dropdown" data-dropdown itemscope itemtype="https://schema.org/ItemList">
+          <meta itemprop="name" content="Projects">
+          <button class="nav-trigger" id="navProjectsBtn" aria-haspopup="true" aria-expanded="false"
+            aria-controls="navProjectsMenu">
+            <svg width="18" height="18" role="img" aria-hidden="true"
+              style="display: inline-block; vertical-align: middle;">
+              <use href="#icon-menu-projects"></use>
+            </svg>
+            Projects <span aria-hidden="true">▾</span>
+          </button>
+          <ul class="nav-menu" id="navProjectsMenu" role="menu" hidden>
+            <li role="none">
+              <a role="menuitem" href="/projects/">
+                <svg width="16" height="16" role="img" aria-hidden="true"
+                  style="display: inline-block; vertical-align: middle;">
+                  <use href="#icon-list-check"></use>
+                </svg>
+                Overzicht
+              </a>
+            </li>
+            <li role="none">
+              <a role="menuitem" href="/projects/open-data/">
+                <svg width="16" height="16" role="img" aria-hidden="true"
+                  style="display: inline-block; vertical-align: middle;">
+                  <use href="#icon-menu-data"></use>
+                </svg>
+                Open Data
+              </a>
+            </li>
+            <li role="none">
+              <a role="menuitem" href="/projects/cases/">
+                <svg width="16" height="16" role="img" aria-hidden="true"
+                  style="display: inline-block; vertical-align: middle;">
+                  <use href="#icon-folder-tree"></use>
+                </svg>
+                Cases
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Portfolio -->
+        <div class="nav-dropdown" data-dropdown itemscope itemtype="https://schema.org/ItemList">
+          <meta itemprop="name" content="Portfolio">
+          <button class="nav-trigger" id="navPortfolioBtn" aria-haspopup="true" aria-expanded="false"
+            aria-controls="navPortfolioMenu">
+            <svg width="18" height="18" role="img" aria-hidden="true"
+              style="display: inline-block; vertical-align: middle;">
+              <use href="#icon-menu-portfolio"></use>
+            </svg>
+            Portfolio <span aria-hidden="true">▾</span>
+          </button>
+          <ul class="nav-menu" id="navPortfolioMenu" role="menu" hidden>
+            <li role="none">
+              <a role="menuitem" href="/portfolio/">
+                <svg width="16" height="16" role="img" aria-hidden="true"
+                  style="display: inline-block; vertical-align: middle;">
+                  <use href="#icon-menu-portfolio"></use>
+                </svg>
+                Overzicht
+              </a>
+            </li>
+            <li role="none">
+              <a role="menuitem" href="/portfolio/publications/">
+                <svg width="16" height="16" role="img" aria-hidden="true"
+                  style="display: inline-block; vertical-align: middle;">
+                  <path
+                    fill="url(#icon-gradient)"
+                    d="M4,6V19H20V6H4M6,8H18V10H6V8M6,12H14V14H6V12M6,16H18V17H6V16M16,12H18V14H16V12Z"
+                  />
+                </svg>
+                Publicaties
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- About -->
+        <a href="/about/" class="nav-link">Over Ons</a>
+
+        <!-- Contact -->
+        <a href="/contact/" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- Mobile navigation -->
+      <nav class="mobile-nav" id="mobileNav" aria-label="Mobiele navigatie" hidden>
+        <div class="mobile-nav-container">
+          <div class="mobile-nav-section">
+            <h3>Hoofdmenu</h3>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/nieuws/">Nieuws</a></li>
+              <li><a href="/projects/">Projects</a></li>
+              <li><a href="/portfolio/">Portfolio</a></li>
+              <li><a href="/about/">Over Ons</a></li>
+              <li><a href="/contact/">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Theme toggle -->
+      <button id="theme-toggle" type="button" aria-label="Thema wisselen" title="Thema wisselen">
+        <svg width="16" height="16">
+          <use href="#icon-circle-half-stroke"></use>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" role="main"></main>
+</body>
+</html>

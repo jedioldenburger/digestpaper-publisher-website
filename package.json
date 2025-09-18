@@ -1,0 +1,23 @@
+{
+  "name": "publisher-digestpaper-com",
+  "version": "1.0.0",
+  "description": "Head meta injector + JSON-LD graph + sitemap voor Publisher DigestPaper",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-head.js",
+    "watch": "nodemon --watch scripts --watch public scripts/build-head.js",
+    "lint": "node -e \"console.log('No lint configured')\""
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.1",
+    "glob": "^11.0.3",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.6.2",
+    "svgo": "^4.0.0",
+    "svgstore": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "license": "MIT"
+}

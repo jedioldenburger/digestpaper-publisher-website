@@ -1,0 +1,37 @@
+DigestPaper — Nebula (clean) ULTRA Pack
+Updated: 2025-09-18 08:05 UTC
+
+Files you probably want at site root:
+  /site.webmanifest
+  /browserconfig.xml
+  /favicon.ico
+
+Recommended <head> tags:
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#6D4DF7">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/nebula-clean-icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/nebula-clean-icon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/ios-icon-180.png">
+
+Place assets:
+  Put all PNG/SVG files from this folder under /assets/brand/ (or similar).
+  Keep site.webmanifest, browserconfig.xml, and favicon.ico at your web root,
+  or adjust the paths inside those files accordingly.
+
+PWA icon notes:
+  - "maskable" icons are inset to 80% safe area.
+  - iOS uses apple-touch-icon (180x180). Android/Chrome uses site.webmanifest icons.
+
+Windows tiles (legacy/desktop pinning):
+  - browserconfig.xml references exact sizes 70, 150, 310 (PNG). TileColor is #0b1220.
+
+Social images:
+  - og-1200x630.png (Open Graph)
+  - social-1500x500.png (headers / Twitter/X)
+
+Sprite usage:
+  <object type="image/svg+xml" data="/assets/brand/nebula-clean-sprite.svg" hidden></object>
+  <svg width="600" height="120" role="img" aria-label="DigestPaper">
+    <use href="#nebula-clean-wordmark-600x120"></use>
+  </svg>

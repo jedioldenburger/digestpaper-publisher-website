@@ -1,0 +1,281 @@
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "@id": "https://digestpaper.com/#org",
+  "name": "DigestPaper",
+  "alternateName": ["DigestPaper Media", "DigestPaper Publishing B.V."],
+  "url": "https://digestpaper.com/",
+  "domain": "digestpaper.com",
+  "mainEntityOfPage": "https://digestpaper.com/",
+  "description": "DigestPaper: internationale en onafhankelijke nieuwsuitgever. Transparante journalistiek, onderzoek en fact-checking.",
+  "slogan": "Independent News Publisher",
+  "inLanguage": ["nl-NL", "en-US"],
+  "foundingDate": "2025-08-01",
+  "foundingLocation": { "@type": "Place", "name": "Amsterdam, NL" },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Sint Olofssteeg 4",
+    "postalCode": "1012AK",
+    "addressLocality": "Amsterdam",
+    "addressRegion": "Noord-Holland",
+    "addressCountry": "NL"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 52.3728,
+    "longitude": 4.8936
+  },
+  "numberOfEmployees": { "@type": "QuantitativeValue", "value": 10 },
+
+  "logo": {
+    "@type": "ImageObject",
+    "@id": "https://digestpaper.com/#logo",
+    "url": "https://digestpaper.com/favicon/nebula-clean-icon-512.png",
+    "contentUrl": "https://digestpaper.com/favicon/nebula-clean-icon-512.png",
+    "width": 512,
+    "height": 512,
+    "caption": "DigestPaper Logo"
+  },
+  "wordmark": {
+    "@type": "ImageObject",
+    "url": "https://digestpaper.com/favicon/nebula-clean-wordmark-600x120.png",
+    "width": 600,
+    "height": 120
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://digestpaper.com/favicon/og-1200x630.png",
+    "width": 1200,
+    "height": 630
+  },
+
+  "sameAs": [
+    "https://www.linkedin.com/company/digestpaper/",
+    "https://github.com/digestpaper",
+    "https://www.patreon.com/cw/digestpaper"
+  ],
+
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "Nieuwsredactie",
+      "email": "jedi@xcom.dev",
+      "url": "https://digestpaper.com/contact/",
+      "availableLanguage": ["nl", "en"],
+      "areaServed": "Worldwide"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "Pers & zakelijk",
+      "email": "jedi@xcom.dev",
+      "url": "https://digestpaper.com/contact/press/",
+      "availableLanguage": ["nl", "en"],
+      "areaServed": "Worldwide"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "Security",
+      "email": "jedi@xcom.dev",
+      "url": "https://digestpaper.com/policies/security-policy/",
+      "availableLanguage": ["nl", "en"],
+      "areaServed": "Worldwide"
+    }
+  ],
+
+  "publishingPrinciples": "https://digestpaper.com/policies/principles/",
+  "verificationFactCheckingPolicy": "https://digestpaper.com/policies/fact-checking/",
+  "correctionsPolicy": "https://digestpaper.com/policies/corrections/",
+  "ownershipFundingInfo": [
+    "https://digestpaper.com/about/ownership/",
+    "https://digestpaper.com/about/funding/"
+  ],
+  "ethicsPolicy": "https://digestpaper.com/policies/principles/ethics",
+  "diversityPolicy": "https://digestpaper.com/policies/principles/diversity",
+  "unnamedSourcesPolicy": "https://digestpaper.com/policies/principles/sources",
+  "noBylinesPolicy": "https://digestpaper.com/policies/principles/bylines",
+  "privacyPolicy": "https://digestpaper.com/policies/privacy/",
+  "cookiePolicy": "https://digestpaper.com/policies/cookie-policy/",
+  "termsOfService": "https://digestpaper.com/policies/terms-of-service/",
+  "accessibilityPolicy": "https://digestpaper.com/policies/accessibility/",
+  "securityPolicy": "https://digestpaper.com/policies/security-policy/",
+  "masthead": "https://digestpaper.com/about/masthead/",
+
+  "security": {
+    "policyUrl": "https://digestpaper.com/policies/security-policy/",
+    "txtUrl": "https://digestpaper.com/.well-known/security.txt",
+    "pgpKeyUrl": "https://digestpaper.com/pgp.txt",
+    "acknowledgmentsUrl": "https://digestpaper.com/policies/security-policy/acknowledgments/",
+    "contact": "mailto:jedi@xcom.dev"
+  },
+
+  "feeds": {
+    "rss": "https://digestpaper.com/feed.xml",
+    "atom": "https://digestpaper.com/atom.xml",
+    "json": "https://digestpaper.com/feed.json"
+  },
+
+  "robots": "https://digestpaper.com/robots.txt",
+  "sitemap": "https://digestpaper.com/sitemap.xml",
+
+  "brand": [
+    {
+      "@type": "Brand",
+      "name": "Politie-Forum.nl",
+      "url": "https://politie-forum.nl/",
+      "sitemap": "https://politie-forum.nl/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "Politie-NL.nl",
+      "url": "https://politie-nl.nl/",
+      "sitemap": "https://politie-nl.nl/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "OnderzoekPortaal.nl",
+      "url": "https://onderzoekportaal.nl/",
+      "sitemap": "https://onderzoekportaal.nl/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "OnderzoekPlatform.nl",
+      "url": "https://onderzoekplatform.nl/",
+      "sitemap": "https://onderzoekplatform.nl/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "Cybersecurity-AI.eu",
+      "url": "https://cybersecurity-ai.eu/",
+      "sitemap": "https://cybersecurity-ai.eu/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "HeadlinesMagazine.com",
+      "url": "https://headlinesmagazine.com/",
+      "sitemap": "https://headlinesmagazine.com/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "HetNieuws.app",
+      "url": "https://hetnieuws.app/",
+      "sitemap": "https://hetnieuws.app/sitemap.xml"
+    },
+    {
+      "@type": "Brand",
+      "name": "CyberSecurityAD.com",
+      "url": "https://cybersecurityad.com/",
+      "sitemap": "https://cybersecurityad.com/sitemap.xml"
+    }
+  ],
+
+  "people": [
+    {
+      "@type": "Person",
+      "@id": "https://digestpaper.com/#person-jedi-oldenburger",
+      "name": "Jedi Oldenburger",
+      "jobTitle": "Hoofdredacteur",
+      "email": "jedi@xcom.dev",
+      "url": "https://digestpaper.com/about/masthead/jedioldenburger",
+      "sameAs": [
+        "https://www.linkedin.com/in/jedioldenburger/",
+        "https://github.com/jedioldenburger"
+      ],
+      "affiliation": { "@id": "https://digestpaper.com/#org" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://digestpaper.com/#person-hendrik-ambacht",
+      "name": "Hendrik Ambacht",
+      "jobTitle": "Chef Nieuws",
+      "email": "hendrik@digestpaper.com",
+      "url": "https://digestpaper.com/about/masthead/hendrik-ambacht"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://digestpaper.com/#person-data-team",
+      "name": "DigestPaper Data Team",
+      "jobTitle": "Data Journalisten",
+      "email": "data@digestpaper.com"
+    }
+  ],
+
+  "legal": {
+    "license": "https://creativecommons.org/licenses/by/4.0/"
+  },
+
+  "siteVerification": {
+    "google": "Bfdhhp4SUxy8XbOJEjulnFvHQey-cb-VpTGLKRSTQYo",
+    "domain": "digestpaper.com"
+  },
+
+  "assets": {
+    "webmanifest": "https://digestpaper.com/favicon/site.webmanifest",
+    "icons": [
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-16.png",
+        "sizes": "16x16",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-32.png",
+        "sizes": "32x32",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-48.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-384.png",
+        "sizes": "384x384",
+        "type": "image/png"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "https://digestpaper.com/favicon/nebula-clean-icon-maskable-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+      }
+    ],
+    "socialImage": "https://digestpaper.com/favicon/og-1200x630.png",
+    "faviconIco": "https://digestpaper.com/favicon/favicon.ico"
+  },
+
+  "significantLink": [
+    "https://digestpaper.com/",
+    "https://politie-forum.nl/",
+    "https://politie-nl.nl/",
+    "https://onderzoekportaal.nl/",
+    "https://onderzoekplatform.nl/",
+    "https://cybersecurity-ai.eu/",
+    "https://headlinesmagazine.com/",
+    "https://hetnieuws.app/",
+    "https://cybersecurityad.com/"
+  ],
+
+  "created": "2025-09-18",
+  "lastModified": "2025-09-18",
+  "version": "4.0.0"
+}

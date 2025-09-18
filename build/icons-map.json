@@ -1,0 +1,16 @@
+{
+  "github":        { "set": "brands", "title": "GitHub", "desc": "Link naar onze GitHub-organisatie", "id": "icon-github" },
+  "linkedin":      { "set": "brands", "title": "LinkedIn", "desc": "Volg ons op LinkedIn", "id": "icon-linkedin" },
+  "instagram":     { "set": "brands", "title": "Instagram", "desc": "Volg ons op Instagram", "id": "icon-instagram" },
+
+  "building":      { "set": "solid",  "title": "Bedrijf", "desc": "Adresgegevens van DigestPaper Media", "id": "icon-building" },
+  "phone":         { "set": "solid",  "title": "Telefoon", "desc": "Bel ons telefoonnummer", "id": "icon-phone" },
+  "envelope":      { "set": "solid",  "title": "E-mail", "desc": "Stuur ons een e-mail", "id": "icon-envelope" },
+  "shield-halved": { "set": "solid",  "title": "Privacy & Security", "desc": "Informatie over privacy en beveiliging", "id": "icon-shield" },
+  "cookie-bite":   { "set": "solid",  "title": "Cookies", "desc": "Cookiebeleid en voorkeuren", "id": "icon-cookie" },
+  "file-contract": { "set": "solid",  "title": "Voorwaarden", "desc": "Algemene voorwaarden", "id": "icon-file-contract" },
+  "universal-access": { "set": "solid", "title": "Toegankelijkheid", "desc": "Toegankelijkheidsinformatie", "id": "icon-universal-access" },
+  "lock":          { "set": "solid",  "title": "Security", "desc": "Beveiligingsmaatregelen", "id": "icon-lock" },
+  "award":         { "set": "solid",  "title": "Erkenningen", "desc": "Erkenningen en onderscheidingen", "id": "icon-award" }
+
+}

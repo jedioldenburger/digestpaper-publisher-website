@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="nebula-clean-icon" viewBox="0 0 512 512">
+    
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">DigestPaper — Nebula (Clean) Icon</title>
+  <desc id="d">Hex shield and loupe without diagonal beam; transparent background.</desc>
+  <defs>
+    <linearGradient id="ink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08B6D4"/>
+      <stop offset="50%" stop-color="#6D4DF7"/>
+      <stop offset="100%" stop-color="#00E887"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Hex shield -->
+  <path d="M 433.36 153.6 L 433.36 358.4 L 256.0 460.8 L 78.64 358.4 L 78.64 153.6 L 256.0 51.2 Z" fill="none" stroke="url(#ink)" stroke-width="17.92" />
+  <!-- Loupe ring + handle -->
+  <circle cx="256.0" cy="256.0" r="102.4" fill="none" stroke="url(#ink)" stroke-width="30.72" />
+  <g transform="translate(256.0,256.0) rotate(35)">
+    <rect x="102.4" y="-12.8" width="92.16" height="25.6" rx="12.8" fill="url(#ink)" />
+  </g>
+  <!-- Soft core glow -->
+  <circle cx="256.0" cy="256.0" r="133.12" fill="url(#glow)" />
+
+  </symbol>
+  <symbol id="nebula-clean-wordmark-600x120" viewBox="0 0 600 120">
+    
+<svg width="600" height="120" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+  <title id="t">DigestPaper — Nebula (Clean) Wordmark</title>
+  <desc id="d">Wordmark with hex shield + loupe; no diagonal beam.</desc>
+  <defs>
+    <linearGradient id="ink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08B6D4"/>
+      <stop offset="50%" stop-color="#6D4DF7"/>
+      <stop offset="100%" stop-color="#00E887"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      .ui{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif}
+      .word{font-weight:900;letter-spacing:-.02em;fill:url(#ink)}
+    </style>
+  </defs>
+  <!-- Mark (no beam) -->
+  <g transform="translate(50.4,60.0)">
+    <path d="M -33.6 0 L -16.8 -28.799999999999997 L 16.8 -28.799999999999997 L 33.6 0 L 16.8 28.799999999999997 L -16.8 28.799999999999997 Z"
+          fill="none" stroke="url(#ink)" stroke-width="4.2" />
+    <circle cx="0" cy="0" r="19.2" fill="none" stroke="url(#ink)" stroke-width="7.199999999999999" />
+    <g transform="rotate(35)">
+      <rect x="19.2" y="-2.6399999999999997" width="19.2" height="5.3999999999999995" rx="2.6399999999999997" fill="url(#ink)" />
+    </g>
+    <circle cx="0" cy="0" r="24.0" fill="url(#glow)" />
+  </g>
+  <!-- Word -->
+  <text x="108.0" y="84.0" class="ui word" font-size="69.6">DigestPaper</text>
+
+  </symbol>
+</svg>

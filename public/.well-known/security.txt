@@ -1,0 +1,8 @@
+Contact: mailto:jedi@xcom.dev
+Contact: https://publisher.digestpaper.com/contact
+Encryption: https://publisher.digestpaper.com/pgp.txt
+Policy: https://publisher.digestpaper.com/security-policy
+Canonical: https://publisher.digestpaper.com/.well-known/security.txt
+Preferred-Languages: nl, en
+Expires: 2026-12-31T23:59:59Z
+Acknowledgments: https://publisher.digestpaper.com/security-policy#acknowledgments

@@ -1,0 +1,217 @@
+{
+  "site": {
+    "name": "DigestPaper Media",
+    "title": "DigestPaper Media — Journalistiek · Nieuws · Onderzoek",
+    "description": "DigestPaper Media: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.",
+    "baseUrl": "https://digestpaper.com",
+    "language": "nl-NL",
+    "locale": "nl_NL",
+    "timezone": "Europe/Amsterdam",
+    "author": "DigestPaper Media",
+    "organization": "DigestPaper Publishing"
+  },
+  "contact": {
+    "email": "jedi@xcom.dev",
+    "phone": "+31648319165",
+    "address": {
+      "street": "Sint Olofssteeg 4",
+      "postal": "1012AK",
+      "city": "Amsterdam",
+      "country": "Nederland",
+      "countryCode": "NL",
+      "coordinates": {
+        "lat": "52.3728",
+        "lng": "4.8936"
+      }
+    }
+  },
+  "social": {
+    "github": "https://github.com/cybersecurityad",
+    "linkedin": "https://linkedin.com/in/cybersecurityad", 
+    "instagram": "https://instagram.com/cybersecurityad",
+    "twitter": "@digestpaper"
+  },
+  "branding": {
+    "primaryColor": "#6b21a8",
+    "secondaryColor": "#9333ea",
+    "logoPath": "/assets/digestpaper-media-logo.png",
+    "defaultImage": "digestpaper-square-512.png",
+    "favicon": "/favicon/favicon.ico"
+  },
+  "seo": {
+    "googleSiteVerification": "Bfdhhp4SUxy8XbOJEjulnFvHQey-cb-VpTGLKRSTQYo",
+    "bingVerification": "",
+    "googleAnalytics": "G-M3T3YEQZLG",
+    "enableStructuredData": true,
+    "enableOpenGraph": true,
+    "enableTwitterCards": true,
+    "enableDublinCore": true
+  },
+  "content": {
+    "defaultContentLength": 250,
+    "enableContentRotation": true,
+    "rotationTypes": ["intro", "mission", "technology", "commitment", "future", "innovation", "wisdom", "legal", "investigation", "scandal"],
+    "minContentWords": 150,
+    "maxContentWords": 600
+  },
+  "features": {
+    "enableDarkMode": true,
+    "enableCookieConsent": true,
+    "enableAnalytics": true,
+    "enableNewsSubscription": false,
+    "enablePWA": true,
+    "enableAMP": false
+  },
+  "build": {
+    "outputDir": "../public",
+    "templatesDir": "../templates",
+    "assetsDir": "../assets",
+    "enableMinification": false,
+    "enableCompression": true,
+    "generateSitemap": true
+  },
+  "contentVariations": {
+    "intro": [
+      "In een wereld waar kunstmatige intelligentie de grenzen van het mogelijke herdefiniëert, staat DigestPaper Media vooraan in de revolutie van digitale journalistiek en technologische vooruitgang.",
+      "De toekomst is niet langer een abstract concept - het is hier, nu, en DigestPaper Media navigeert door de complexe labyrinten van AI, cybersecurity en emerging technologies.",
+      "Terwijl algoritmen steeds slimmer worden en machines leren denken, bouwt DigestPaper Media bruggen tussen technologische innovatie en menselijke intelligentie.",
+      "In het tijdperk van quantum computing, neural networks en blockchain revoluties, vormt DigestPaper Media de voorhoede van technologische berichtgeving en toekomstvisie.",
+      "Van GPT-4 tot autonome systemen, van biometrische authenticatie tot predictive analytics - DigestPaper Media ontrafelt de mysteries van onze digitale toekomst."
+    ],
+    "mission": [
+      "Onze missie transcendeert traditionele journalistiek: we verkennen de ethische implicaties van AI-gestuurd decision making en de impact van automation op de samenleving.",
+      "Door deep learning technieken en advanced data analytics te combineren met journalistieke integriteit, creëren we inzichten die de toekomst vormgeven.",
+      "We geloven dat transparantie in AI-systemen cruciaal is voor democratische processen - daarom onderzoeken we black box algorithms en maken we complexe technologie begrijpelijk.",
+      "Met machine learning models en predictive journalism pionieren we in het voorspellen van trends, het identificeren van patterns, en het onthullen van verborgen verbanden.",
+      "Onze commitment ligt in het democratiseren van technologische kennis, van quantum cryptography tot biohacking ethics - we maken de toekomst toegankelijk voor iedereen."
+    ],
+    "technology": [
+      "Onze technologische arsenal omvat cutting-edge AI tools: natural language processing voor sentimentanalyse, computer vision voor beeldverificatie, en blockchain voor bronintegriteit.",
+      "Met proprietary algorithms analyseren we big data streams, detecteren we deepfakes, en voorspellen we emerging threats in cyberspace met ongekende precisie.",
+      "Door gebruik van federated learning en privacy-preserving technologies waarborgen we datasecurity terwijl we revolutionaire inzichten genereren.",
+      "Onze platforms draaien op cloud-native architectures met real-time processing capabilities, edge computing integration, en quantum-resistant encryption protocols.",
+      "Van automated fact-checking systemen tot AI-powered content verification - we hebben de infrastructuur van de toekomst al vandaag geïmplementeerd."
+    ],
+    "commitment": [
+      "In een wereld van algorithmic bias en AI hallucinations, committeren we ons aan ethical AI development en responsible innovation in alle technologische implementaties.",
+      "We staan aan de vooravond van de Artificial General Intelligence era - DigestPaper Media bereidt de samenleving voor op deze paradigm shift met verantwoorde berichtgeving.",
+      "Onze dedication aan human-AI collaboration zorgt ervoor dat technologische vooruitgang altijd ten dienste staat van menselijke waardigheid en democratische waarden.",
+      "Als digital guardians van de toekomst, bewaken we de ontwikkeling van superintelligent systems en advocaten we voor transparante, controleerbare AI-governance.",
+      "Met vooruitziende blik op transhumanistische ontwikkelingen, quantum supremacy, en neural interface technologies, bereiden we onze lezers voor op de wereld van morgen."
+    ],
+    "future": [
+      "Stel je een wereld voor waar AI-systemen complexere problemen oplossen dan de menselijke geest kan bevatten - wij rapporteren vanuit deze emerging reality.",
+      "In 2030 zullen quantum computers encryptie zoals we die kennen obsoleet maken. DigestPaper Media verkent vandaag al de implications van post-quantum cryptography.",
+      "Wanneer neural implants mainstream worden en brain-computer interfaces ons dagelijks leven transformeren, zullen we de ethical en practical aspecten hebben gedocumenteerd.",
+      "De convergentie van AI, biotechnology, en nanotechnology creëert unprecedented mogelijkheden - en risks. Wij zijn uw gids door deze technological singularity.",
+      "Van autonomous cities tot space-based solar power, van digital twins tot metaverse governance - de toekomst die science fiction beloofde, wordt realiteit onder onze observatie."
+    ],
+    "innovation": [
+      "Machine consciousness, swarm intelligence, en distributed autonomous organizations definiëren de nieuwe economische en sociale structuren die we documenteren.",
+      "Synthetic biology, programmable matter, en molecular assemblers zullen manufacturing revolutioneren - DigestPaper Media analyseert de societal impact van deze developments.",
+      "Als pioneers in AI journalism, experimenteren we met GPT-assisted research, automated fact-verification, en sentiment analysis van social media ecosystems.",
+      "Onze investigative methodologies incorporeren predictive policing data, satellite imagery analysis, en cryptocurrency transaction tracking voor unprecedented transparency.",
+      "Door collaboration met tech innovators, researchers, en ethicists, blijven we ahead of the curve in emerging technologies die onze civilization zullen redefinieren."
+    ],
+    "wisdom": [
+      "True wisdom in het AI-tijdperk ligt niet in resistance to change, maar in thoughtful integration van technological capabilities met human values en ethical considerations.",
+      "De greatest revolution in human history speelt zich niet af op battlefields, maar in server farms, research labs, en code repositories - wij documenteren deze silent transformation.",
+      "Knowledge zonder wisdom is dangerous; AI zonder ethical guidance is catastrophic. DigestPaper Media zorgt dat technological advancement gepaard gaat met moral progress.",
+      "In een wereld van infinite information, wordt curation de ultimate skill. Wij filteren de noise en amplificeren de signals die werkelijk matter voor onze future.",
+      "De bridge tussen human intuition en machine precision vormt de foundation van onze editorial philosophy - waar artificial intelligence human intelligence versterkt, niet vervangt."
+    ],
+    "legal": [
+      "In Nederland's complexe rechtssysteem navigeren we door de labyrinten van jurisprudentie, wetgeving en rechtspraktijk met journalistieke precision en ethische integriteit.",
+      "De rechtsstaat staat onder druk: van illegale opsporingsmethoden tot digitale surveillance - wij belichten waar de grenzen van rechtmatige overheidshandelen worden overschreden.",
+      "Gerechtelijke dwalingen, politie-overschrijdingen en schendingen van grondrechten vereisen kritische journalistiek die de machthebbers ter verantwoording roept.",
+      "Privacy, mensenrechten en procedurele waarborgen vormen de fundamenten van onze democratie - DigestPaper Media bewaakt deze essentiële rechtsprincipes.",
+      "Van de Grondwet tot Europese verdragen, van strafrecht tot bestuursrecht - wij maken complexe juridische materie toegankelijk voor iedereen."
+    ],
+    "investigation": [
+      "Onze onderzoeksjournalistieke methoden combineren traditionele bronnenwerking met moderne data-analyse en digitale forensics voor ongekende transparantie.",
+      "Door grondige verificatie van documenten, getuigenverklaringen en digitale sporen brengen we verborgen waarheden aan het licht in complexe rechtszaken.",
+      "Met respect voor bronbescherming en journalistieke ethiek onthullen we systemische problemen binnen justitie, politie en andere overheidsinstellingen.",
+      "Van FOIA-verzoeken tot leaked documents, van whistleblower-tips tot data-leaks - we hanteren de hoogste standaarden van verificatie en fact-checking.",
+      "Onze investigative teams werken samen met juristen, data-analisten en privacy-experts om de waarheid boven water te krijgen, ongeacht politieke gevoeligheden."
+    ],
+    "scandal": [
+      "Het Grote Politie Onderzoek begon als een routinezaak, maar ontaardde in een van de grootste schandalen in de Nederlandse rechtsgeschiedenis. Wat aanvankelijk werd gepresenteerd als een doorbraak in de opsporing, bleek al snel een web van leugens, machtsmisbruik en institutioneel falen.",
+      "Maandenlang hielden hoge politiefunctionarissen vol dat alles volgens het boekje verliep. Achter gesloten deuren echter, woedde een storm van paniek en wanhoop. Documenten werden vernietigd, getuigen geïntimideerd, en kritische journalisten monddood gemaakt. De waarheid was te explosief voor de gevestigde orde.",
+      "De eerste signalen van corruptie werden weggewuifd als 'ontevreden ex-medewerkers' en 'complottheorieën'. Maar toen insider-documenten naar buiten kwamen, viel het kaartenhuis in elkaar. Het onderzoek dat de Nederlandse politie moest zuiveren, werd het bewijs van haar verval.",
+      "Geheime opnames toonden aan hoe commissarissen druk uitoefenden op onderzoeksleiders om belastende bewijzen te negeren. E-mails tussen topfunctionarissen onthulden een cynische houding tegenover rechtsstaat en democratische controle. 'We bepalen zelf wat de waarheid is,' schreef een hoofdcommissaris.",
+      "Het tragische van Het Grote Politie Onderzoek is niet alleen het individuele leed dat het veroorzaakte, maar de systematische ondermijning van het vertrouwen in de rechtsstaat. Wanneer de bewakers van de wet zelf de wet breken, staat de democratie op het spel."
+    ]
+  },
+  "navigation": {
+    "projects": {
+      "label": "Projecten",
+      "icon": "icon-menu-projects",
+      "items": [
+        {"label": "Overzicht", "url": "/projects/", "icon": "icon-list-check"},
+        {"label": "Open Data", "url": "/projects/open-data/", "icon": "icon-menu-data"},
+        {"label": "Cases", "url": "/projects/cases/", "icon": "icon-folder-tree"}
+      ]
+    },
+    "portfolio": {
+      "label": "Portfolio", 
+      "icon": "icon-menu-portfolio",
+      "items": [
+        {"label": "Overzicht", "url": "/portfolio/", "icon": "icon-menu-portfolio"},
+        {"label": "Publicaties", "url": "/portfolio/publications/", "icon": "fa-solid fa-newspaper"},
+        {"label": "Software", "url": "/portfolio/software/", "icon": "fa-solid fa-code"},
+        {"label": "Websites", "url": "/portfolio/websites/", "icon": "fa-solid fa-globe"}
+      ]
+    },
+    "topics": {
+      "label": "Topics",
+      "icon": "fa-solid fa-folder-tree",
+      "items": [
+        {"label": "Overzicht", "url": "/topics/", "icon": "fa-solid fa-list-check"},
+        {"label": "AI", "url": "/topics/ai/", "icon": "fa-solid fa-robot"},
+        {"label": "CyberSecurity", "url": "/topics/cybersecurity/", "icon": "fa-solid fa-shield-halved"},
+        {"label": "Nederland/Recht", "url": "/topics/nederland/recht/illegale-opsporings-methoden/", "icon": "fa-solid fa-scale-balanced"},
+        {"label": "Politie Techniek", "url": "/topics/politie-techniek/", "icon": "fa-solid fa-user-secret"},
+        {"label": "Juridische", "url": "/topics/juridische/", "icon": "fa-solid fa-scale-balanced"}
+      ]
+    },
+    "about": {
+      "label": "About",
+      "icon": "fa-solid fa-circle-info",
+      "items": [
+        {"label": "Overzicht", "url": "/about/", "icon": "fa-solid fa-user-group"},
+        {"label": "Personal", "url": "/about/personal/", "icon": "fa-solid fa-id-card"},
+        {"label": "Ownership", "url": "/about/ownership/", "icon": "fa-solid fa-handshake"}
+      ]
+    },
+    "data": {
+      "label": "Data",
+      "icon": "fa-solid fa-microchip",
+      "items": [
+        {"label": "Data", "url": "/data/", "icon": "fa-solid fa-database"},
+        {"label": "Tools", "url": "/tools/", "icon": "fa-solid fa-screwdriver-wrench"},
+        {"label": "Labs", "url": "/labs/", "icon": "fa-solid fa-flask"},
+        {"label": "API", "url": "/api/", "icon": "fa-solid fa-code"}
+      ]
+    },
+    "policies": {
+      "label": "Beleid",
+      "icon": "fa-solid fa-shield-halved",
+      "items": [
+        {"label": "Principes", "url": "/policies/principles/", "icon": "fa-solid fa-scale-balanced"},
+        {"label": "Fact-checking", "url": "/policies/fact-checking/", "icon": "fa-solid fa-magnifying-glass"},
+        {"label": "Correcties", "url": "/policies/corrections/", "icon": "fa-solid fa-rotate-left"},
+        {"label": "Privacy", "url": "/policies/privacy/", "icon": "fa-solid fa-user-shield"},
+        {"label": "Security", "url": "/policies/security-policy/", "icon": "fa-solid fa-lock"}
+      ]
+    },
+    "contact": {
+      "label": "Contact",
+      "icon": "fa-solid fa-envelope",
+      "items": [
+        {"label": "Overzicht", "url": "/contact/", "icon": "fa-solid fa-paper-plane"},
+        {"label": "Tips (PGP/Signal)", "url": "/contact/tips/", "icon": "fa-solid fa-lock"},
+        {"label": "Pers & Media", "url": "/contact/press/", "icon": "fa-solid fa-bullhorn"}
+      ]
+    }
+  }
+}

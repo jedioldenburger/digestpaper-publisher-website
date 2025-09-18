@@ -1,0 +1,14 @@
+/* Icon fixes for news ticker items */
+.news-item-icon {
+  fill: var(--accent, #6b21a8);
+  transition: fill 0.2s ease;
+}
+
+.news-item:hover .news-item-icon {
+  fill: var(--accent-hover, #9333ea);
+}
+
+/* Fix for svg use element namespaces */
+svg use {
+  pointer-events: none;
+}

@@ -1,0 +1,50 @@
+{
+  "name": "digestpaper-page-generator",
+  "version": "1.0.0",
+  "description": "Dynamic HTML page generator for DigestPaper Media website with advanced SEO and content rotation features",
+  "main": "enhanced-generator.js",
+  "scripts": {
+    "generate": "node enhanced-generator.js",
+    "generate:all": "node enhanced-generator.js --all",
+    "generate:sitemap": "node enhanced-generator.js --sitemap",
+    "generate:deterministic": "node enhanced-generator.js --all --deterministic",
+    "list": "node enhanced-generator.js --list",
+    "stats": "node enhanced-generator.js --stats",
+    "config": "node enhanced-generator.js --config",
+    "build": "npm run generate:deterministic && npm run generate:sitemap",
+    "clean": "rm -rf ../public/*/index.html ../public/sitemap.xml",
+    "rebuild": "npm run clean && npm run build",
+    "test": "node test-generator.js",
+    "validate": "node validate-output.js"
+  },
+  "keywords": [
+    "html-generator",
+    "seo",
+    "static-site",
+    "journalism",
+    "dutch",
+    "digestpaper",
+    "content-management"
+  ],
+  "author": "DigestPaper Media",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chalk": "^4.1.2",
+    "validator": "^13.9.0"
+  },
+  "bin": {
+    "digestpaper-generator": "./enhanced-generator.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digestpaper/website-generator"
+  },
+  "bugs": {
+    "url": "https://github.com/digestpaper/website-generator/issues"
+  },
+  "homepage": "https://digestpaper.com"
+}
