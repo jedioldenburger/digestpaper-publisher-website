@@ -1,0 +1,8 @@
+# Ignore HTML files to prevent formatting issues with validation fixes
+*.html
+public/**/*.html
+
+# Keep other exclusions if needed
+node_modules/
+dist/
+build/

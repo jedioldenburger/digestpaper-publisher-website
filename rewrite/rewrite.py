@@ -1950,37 +1950,45 @@ def write_static_article(article: Dict[str, Any], output_base: str) -> Dict[str,
 def article_html_template_enhanced(article: Dict[str, Any]) -> str:
     """Enhanced article template using dynamic header/footer templates"""
     title = article.get("title", "")
-    desc = article.get("description", "")
+    summary = article.get("summary", "")
+    desc = get_first_sentence_description(article.get("full_text", "") or summary)
     urls = article.get("urls", {})
     canonical = urls.get("canonical", "")
     timestamp = article.get("timestamp")
     category = article.get("category", "Nieuws")
     tags = article.get("tags", [])
 
-    # Prepare metadata for header
+    # Generate structured data for the article
+    structured_data_json = build_newsarticle_ld(article)
+    structured_data_html = f'<script type="application/ld+json">{json.dumps(structured_data_json, ensure_ascii=False, indent=2)}</script>'
+
+    # Enhanced metadata for article pages
     header_metadata = {
-        "title": f"{title} | DigestPaper.com",
-        "description": desc[:160] if desc else f"{title} - Lees meer op DigestPaper.com",
-        "keywords": f"{', '.join(tags[:5])}, politie, nieuws, {category.lower()}" if tags else f"politie, nieuws, {category.lower()}",
+        "title": title,
+        "description": desc[:160] if desc else f"{title[:100]}...",
+        "keywords": ", ".join(tags[:10]) if tags else f"{category.lower()}, nieuws, nederland",
         "canonical_url": canonical,
         "og_type": "article",
         "og_title": title,
         "og_description": desc[:160] if desc else title,
         "og_url": canonical,
-        "og_image": article.get("image_url", "https://digestpaper.com/favicon/og-1200x630.jpg"),
+        "og_image": article.get("image_url", "https://digestpaper.com/favicon/og-1200x630.png"),
         "twitter_title": title,
         "twitter_description": desc[:160] if desc else title,
-        "twitter_image": article.get("image_url", "https://digestpaper.com/favicon/twitter-1200x630.jpg"),
-        "structured_data": generate_article_structured_data(article),
-        "extra_css": '''<link rel="stylesheet" href="/css/style.css">''',
-        "extra_js": '''<script type="module" src="/js/app.js"></script>
-<script src="/js/category-enhancer.js"></script>
-<script src="/js/svg-icon-enhancer.js"></script>
-<script src="/js/article-enhanced.js" defer></script>'''
+        "twitter_image": article.get("image_url", "https://digestpaper.com/favicon/og-1200x630.png"),
+        "author": "DigestPaper",
+        "date_published": iso_timestamp(timestamp) if timestamp else iso_timestamp(get_dutch_now()),
+        "date_modified": iso_timestamp(timestamp) if timestamp else iso_timestamp(get_dutch_now()),
+        "category": category,
+        "tags": tags,
+        "featured_image": article.get("image_url"),
+        "microdata_itemscope": 'itemscope itemtype="https://schema.org/NewsArticle"',
+        "body_class": "article-page",
+        "structured_data": structured_data_html
     }
 
-    # Generate header
-    header_html = generate_header_html(header_metadata)
+    # Generate header using article template
+    header_html = generate_header_html(header_metadata, page_type="article")
 
     # Main article content
     content_html = generate_article_content(article)
@@ -2333,30 +2341,30 @@ def generate_forum_html(article: Dict[str, Any], output_base: str) -> str:
     # Related discussions (placeholder for now)
     related_discussions = generate_related_discussions(article)
 
+    # Generate structured data for forum page
+    forum_structured_data = generate_forum_structured_data(article, qa_pairs)
+
     # Prepare metadata for header
     header_metadata = {
-        "title": f"{forum_title} | DigestPaper.com",
+        "title": forum_title,
         "description": forum_description,
-        "keywords": f"forum, discussie, {keywords_str}, politie, veiligheid" if keywords_str else "forum, discussie, politie, veiligheid",
+        "keywords": f"forum, discussie, {keywords_str}" if keywords_str else "forum, discussie, politie, veiligheid",
         "canonical_url": forum_url,
         "og_type": "webpage",
         "og_title": forum_title,
         "og_description": forum_description,
         "og_url": forum_url,
-        "og_image": "https://digestpaper.com/favicon/og-1200x630.jpg",
+        "og_image": "https://digestpaper.com/favicon/og-1200x630.png",
         "twitter_title": forum_title,
         "twitter_description": forum_description,
-        "twitter_image": "https://digestpaper.com/favicon/twitter-1200x630.jpg",
-        "structured_data": generate_forum_structured_data(article, qa_pairs),
-        "extra_css": '''<link rel="stylesheet" href="/css/style.css">''',
-        "extra_js": '''<script type="module" src="/js/app.js"></script>
-<script src="/js/category-enhancer.js"></script>
-<script src="/js/svg-icon-enhancer.js"></script>
-<script src="/js/forum-discussion-widget.js" defer></script>'''
+        "twitter_image": "https://digestpaper.com/favicon/og-1200x630.png",
+        "body_class": "forum-page",
+        "microdata_itemscope": 'itemscope itemtype="https://schema.org/DiscussionForumPosting"',
+        "structured_data": forum_structured_data
     }
 
-    # Generate header
-    header_html = generate_header_html(header_metadata)
+    # Generate header using regular template (forum pages are not articles)
+    header_html = generate_header_html(header_metadata, page_type="regular")
 
     # Generate forum content
     content_html = generate_forum_content(article, qa_pairs, related_discussions)
@@ -4318,7 +4326,12 @@ def process_batch(
 
 def load_template(template_name: str, metadata: Dict[str, Any] = None) -> str:
     """Load and process template files with dynamic metadata"""
-    template_path = os.path.join(os.path.dirname(__file__), "..", "templates", template_name)
+    # Look for templates in the parent directory's templates folder
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    template_path = os.path.join(script_dir, "..", "templates", template_name)
+
+    # Normalize path
+    template_path = os.path.normpath(template_path)
 
     try:
         with open(template_path, 'r', encoding='utf-8') as f:
@@ -4327,29 +4340,74 @@ def load_template(template_name: str, metadata: Dict[str, Any] = None) -> str:
         print(f"⚠️ Template not found: {template_path}, using fallback")
         return ""
 
+    # Handle special includes
+    if "{% include 'svg-icons' %}" in template_content:
+        svg_icons = load_svg_icons()
+        template_content = template_content.replace("{% include 'svg-icons' %}", svg_icons)
+
     if metadata:
-        # Replace template variables with actual values
-        for key, value in metadata.items():
-            placeholder = f"{{{{{key}}}}}"
-            template_content = template_content.replace(placeholder, str(value))
+        # Add default values for common template variables
+        defaults = {
+            "lang": "nl",
+            "url": "https://digestpaper.com",
+            "time": get_dutch_now(),
+            "year": get_dutch_now().year
+        }
+
+        # Merge defaults with provided metadata
+        combined_metadata = {**defaults, **metadata}
+
+        # Replace template variables with actual values using Liquid-style syntax
+        for key, value in combined_metadata.items():
+            # Convert value to string
+            str_value = str(value) if value is not None else ""
+
+            # Handle different template patterns
+            template_content = template_content.replace(f"{{{{{key}}}}}", str_value)
+            template_content = template_content.replace(f"{{{{page.{key}}}}}", str_value)
+            template_content = template_content.replace(f"{{{{site.{key}}}}}", str_value)
+
+        # Handle default filter patterns like {{page.title | default: 'Default Title'}}
+        import re
+        # Simple default filter implementation
+        default_pattern = r'\{\{\s*([^|}]+)\s*\|\s*default:\s*[\'"]([^\'"]*)[\'\"\s]*\}\}'
+
+        def replace_default(match):
+            var_name = match.group(1).strip()
+            default_value = match.group(2)
+
+            # Check if variable exists in metadata
+            if var_name in combined_metadata and combined_metadata[var_name]:
+                return str(combined_metadata[var_name])
+            elif var_name.startswith('page.') and var_name[5:] in combined_metadata and combined_metadata[var_name[5:]]:
+                return str(combined_metadata[var_name[5:]])
+            elif var_name.startswith('site.') and var_name[5:] in combined_metadata and combined_metadata[var_name[5:]]:
+                return str(combined_metadata[var_name[5:]])
+            else:
+                return default_value
+
+        template_content = re.sub(default_pattern, replace_default, template_content)
 
     return template_content
 
-def generate_header_html(metadata: Dict[str, Any]) -> str:
-    """Generate dynamic header HTML with metadata"""
+def generate_header_html(metadata: Dict[str, Any], page_type: str = "regular") -> str:
+    """Generate dynamic header HTML with metadata using appropriate template"""
     default_meta = {
-        "title": "DigestPaper.com | Nieuws, Forum & Discussies - Politie & Veiligheid",
-        "description": "Actueel nieuws, forum en analyses over politie en veiligheid in Nederland. Word lid en discussieer mee op DigestPaper.com.",
-        "keywords": "politienieuws, politie forum, opsporingen, misdaad, veiligheid, politieberichten, Nederland",
+        "title": "DigestPaper – Journalistiek, nieuws & onderzoek",
+        "description": "DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.",
+        "keywords": "DigestPaper, uitgever, redactionele richtlijnen, journalistiek, fact-checking, correcties, financiering, transparantie, media, Nederland, onderzoeksjournalistiek, onafhankelijke media",
         "canonical_url": "https://digestpaper.com/",
         "og_type": "website",
-        "og_title": "DigestPaper.com | Nieuws, Forum & Discussies - Politie & Veiligheid",
-        "og_description": "Actueel nieuws, forum en analyses over politie en veiligheid in Nederland. Word lid en discussieer mee op DigestPaper.com.",
+        "og_title": "DigestPaper – Journalistiek, nieuws & onderzoek",
+        "og_description": "DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.",
         "og_url": "https://digestpaper.com/",
-        "og_image": "https://digestpaper.com/favicon/og-1200x630.jpg",
-        "twitter_title": "DigestPaper.com | Nieuws, Forum & Discussies - Politie & Veiligheid",
-        "twitter_description": "Actueel politienieuws, forum en analyses over politie en veiligheid in Nederland.",
-        "twitter_image": "https://digestpaper.com/favicon/twitter-1200x630.jpg",
+        "og_image": "https://digestpaper.com/favicon/og-1200x630.png",
+        "twitter_title": "DigestPaper – Journalistiek, nieuws & onderzoek",
+        "twitter_description": "DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.",
+        "twitter_image": "https://digestpaper.com/favicon/og-1200x630.png",
+        "lang": "nl",
+        "author": "DigestPaper",
+        "url": "https://digestpaper.com",
         "structured_data": "",
         "extra_css": "",
         "extra_js": ""
@@ -4358,8 +4416,14 @@ def generate_header_html(metadata: Dict[str, Any]) -> str:
     # Merge provided metadata with defaults
     combined_meta = {**default_meta, **metadata}
 
+    # Choose template based on page type
+    if page_type == "article":
+        template_name = "header-article.html"
+    else:
+        template_name = "header-regular.html"
+
     # Load template and replace variables
-    header_template = load_template("header.html", combined_meta)
+    header_template = load_template(template_name, combined_meta)
 
     if not header_template:
         # Fallback header if template loading fails
@@ -4380,22 +4444,59 @@ def generate_header_html(metadata: Dict[str, Any]) -> str:
 
     return header_template
 
+def load_svg_icons() -> str:
+    """Load SVG icons from the main index.html file for templates"""
+    try:
+        # Try to read SVG icons from the main index.html file
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        index_path = os.path.join(script_dir, "..", "public", "index.html")
+        index_path = os.path.normpath(index_path)
+
+        with open(index_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # Extract SVG sprite from index.html
+        import re
+        svg_match = re.search(r'<svg[^>]*aria-hidden="true"[^>]*>.*?</svg>', content, re.DOTALL)
+        if svg_match:
+            return svg_match.group(0)
+    except Exception as e:
+        print(f"⚠️ Could not load SVG icons: {e}")
+
+    # Fallback empty SVG
+    return '<svg width="0" height="0" style="position: absolute;" aria-hidden="true"><defs></defs></svg>'
+
 def generate_footer_html(metadata: Dict[str, Any] = None) -> str:
-    """Generate dynamic footer HTML"""
+    """Generate dynamic footer HTML using footer template"""
     footer_meta = metadata or {}
 
-    # Load template
+    # Load footer template
     footer_template = load_template("footer.html", footer_meta)
 
     if not footer_template:
         # Fallback footer with correct JavaScript includes
-        return """  <script type="module" src="/js/app.js"></script>
-  <script src="/js/category-enhancer.js"></script>
-  <script src="/js/svg-icon-enhancer.js"></script>
+        return """<footer class="site-footer">
+  <p>&copy; 2025 DigestPaper Publishing B.V. - Alle rechten voorbehouden</p>
+</footer>
+
+<!-- Enhanced JavaScript for professional interactions -->
+<script type="module" src="/js/app.js"></script>
+<script src="/js/category-enhancer.js"></script>
+<script src="/js/svg-icon-enhancer.js"></script>
 </body>
 </html>"""
 
-    return footer_template
+    # Add closing body and html tags after footer
+    complete_footer = footer_template + """
+
+<!-- Enhanced JavaScript for professional interactions -->
+<script type="module" src="/js/app.js"></script>
+<script src="/js/category-enhancer.js"></script>
+<script src="/js/svg-icon-enhancer.js"></script>
+</body>
+</html>"""
+
+    return complete_footer
 
 # ---------------------------
 # Enhanced Deploy Functionality

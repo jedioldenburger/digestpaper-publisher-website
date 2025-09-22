@@ -1,26 +1,5 @@
-// /js/app.js
-import {
-  logEvent as gaLogEvent,
-  getAnalytics,
-  isSupported,
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  updateProfile,
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  getFirestore,
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+// /js/app.js - Optimized version without Firebase imports
+// Firebase is loaded dynamically only when user interactions require it
 
 const firebaseConfig = {
   apiKey: "AIzaSyD4L4yGM63ZAhY9vpVHAlDfYka9qdAqGA4",
@@ -42,84 +21,102 @@ const firestoreConfig = {
   appId: "1:148890561425:web:7cba0e7477141e3a880830",
 };
 
-// Ready gate
-window.firebaseReady = (async () => {
-  try {
-    // Initialize primary app (botanic-wiki-static-v1) for auth, firestore, analytics
-    const app = initializeApp(firebaseConfig);
+// Firebase state - starts as null, loaded only when needed
+window.firebaseReady = null;
+window.firebaseApp = null;
+window.firebaseAuth = null;
+window.firebaseAnalytics = null;
 
-    // Initialize secondary app only for Firestore access (blockchainkix-com-fy)
-    const firestoreApp = initializeApp(firestoreConfig, "firestoreApp");
+// Function to load Firebase modules dynamically only when explicitly needed
+window.initFirebase = async () => {
+  if (window.firebaseReady) return window.firebaseReady;
 
-    // Use primary app for auth and analytics
-    const auth = getAuth(app);
+  console.log("[Firebase] User requested Firebase - loading modules...");
 
-    // Use secondary app for Firestore
-    const firestore = getFirestore(firestoreApp);
-
-    let analytics = null;
-    let analyticsStatus = 'loading';
-    
-    // Analytics from primary app with correct measurement ID
+  window.firebaseReady = (async () => {
     try {
-      const isAnalyticsSupported = await isSupported();
-      if (isAnalyticsSupported) {
-        analytics = getAnalytics(app);
-        analyticsStatus = 'active';
-        console.info('[Analytics] ✅ Google Analytics initialized successfully');
-      } else {
-        analyticsStatus = 'unsupported';
-        console.info('[Analytics] ⚠️ Analytics not supported in this environment');
+      const { initializeApp } = await import(
+        "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+      );
+      window.firebaseApp = initializeApp(firebaseConfig);
+
+      const { getAuth } = await import(
+        "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+      );
+      window.firebaseAuth = getAuth(window.firebaseApp);
+
+      let analyticsStatus = "inactive";
+      try {
+        const { getAnalytics, isSupported } = await import(
+          "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js"
+        );
+        if (await isSupported()) {
+          window.firebaseAnalytics = getAnalytics(window.firebaseApp);
+          analyticsStatus = "active";
+          console.info("[Analytics] ✅ Google Analytics loaded");
+        } else {
+          analyticsStatus = "unsupported";
+        }
+      } catch (e) {
+        analyticsStatus = "skipped";
+        console.info("[Analytics] ⚠️ Analytics skipped:", e.message);
       }
-    } catch (e) {
-      analyticsStatus = 'blocked';
-      const reason = e?.message?.includes('blocked') ? 'likely blocked by ad blocker' : e?.message || 'unknown error';
-      console.warn(`[Analytics] ❌ Analytics unavailable: ${reason}`);
-      console.info('[Analytics] 🔄 Website will continue operating without analytics');
-    }
 
-    Object.assign(window, {
-      firebaseApp: app, // Primary app (botanic-wiki-static-v1)
-      firebaseFirestoreApp: firestoreApp, // Secondary app (blockchainkix-com-fy) for Firestore only
-      firebaseAuth: auth, // From primary app
-      firebaseFirestore: firestore, // From secondary app (Firestore only)
-      firebaseAnalytics: analytics, // From primary app (G-S20D4FG0BE)
-      analyticsStatus: analyticsStatus, // Status for debugging
-    });
+      window.initFirestore = async () => {
+        if (!window.firebaseFirestore) {
+          try {
+            const { getFirestore, initializeApp: init2 } = await import(
+              "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"
+            );
+            const firestoreApp = init2(firestoreConfig, "firestoreApp");
+            window.firebaseFirestore = getFirestore(firestoreApp);
+            console.log("[Firestore] ✅ Loaded successfully");
+          } catch (error) {
+            console.error("[Firestore] ❌ Load failed:", error);
+            throw error;
+          }
+        }
+        return window.firebaseFirestore;
+      };
 
-    console.log("[Firebase] Initialized with hybrid setup:");
-    console.log("  - Primary app (auth, analytics):", app.options.projectId);
-    console.log(
-      "  - Firestore app (Firestore only):",
-      firestoreApp.options.projectId
-    );
-    
-    // Add connectivity status helper
-    window.getConnectivityStatus = () => {
-      return {
+      // Connectivity helper
+      window.getConnectivityStatus = () => ({
         firebase: !!window.firebaseApp,
         firestore: !!window.firebaseFirestore,
         analytics: analyticsStatus,
         online: navigator.onLine,
-        timestamp: new Date().toISOString()
-      };
-    };
-    
-    // Log overall initialization status
-    const status = window.getConnectivityStatus();
-    console.log('[System] 🚀 Initialization complete:', {
-      firebase: status.firebase ? '✅' : '❌',
-      firestore: status.firestore ? '✅' : '❌', 
-      analytics: status.analytics === 'active' ? '✅' : status.analytics === 'blocked' ? '🚫' : '⚠️',
-      online: status.online ? '✅' : '❌'
-    });
-    
-    return true;
-  } catch (err) {
-    console.error("[Firebase] Init failed:", err);
-    return false;
-  }
-})();
+        timestamp: new Date().toISOString(),
+      });
+
+      const status = window.getConnectivityStatus();
+      console.log("[Firebase] ✅ Modules loaded successfully");
+      console.log("[System] 🚀 Initialization complete:", {
+        firebase: status.firebase ? "✅" : "❌",
+        firestore: status.firestore ? "✅" : "❌",
+        analytics:
+          status.analytics === "active"
+            ? "✅"
+            : status.analytics === "skipped"
+              ? "⚠️"
+              : status.analytics === "unsupported"
+                ? "🚫"
+                : "❌",
+        online: status.online ? "✅" : "❌",
+      });
+
+      return true;
+    } catch (err) {
+      console.error("[Firebase] ❌ Load failed:", err);
+      return false;
+    }
+  })();
+
+  return window.firebaseReady;
+};
+
+// Initialize Firebase immediately for critical features (can be removed if not needed)
+// Comment out this line to make Firebase completely on-demand:
+// window.initFirebase();
 
 /* -------------------- DARK MODE -------------------- */
 (function darkMode() {
@@ -151,21 +148,23 @@ window.firebaseReady = (async () => {
 (function networkMonitoring() {
   // Monitor online/offline status
   const handleOnline = () => {
-    console.info('[Network] 🌐 Connection restored');
+    console.info("[Network] 🌐 Connection restored");
     // Could add UI notification here if needed
   };
-  
+
   const handleOffline = () => {
-    console.warn('[Network] 📡 Connection lost - some features may be limited');
+    console.warn("[Network] 📡 Connection lost - some features may be limited");
     // Could add UI notification here if needed
   };
-  
-  window.addEventListener('online', handleOnline);
-  window.addEventListener('offline', handleOffline);
-  
+
+  window.addEventListener("online", handleOnline);
+  window.addEventListener("offline", handleOffline);
+
   // Add a debug command for checking status
   window.checkConnectivity = () => {
-    const status = window.getConnectivityStatus?.() || { error: 'Not initialized' };
+    const status = window.getConnectivityStatus?.() || {
+      error: "Not initialized",
+    };
     console.table(status);
     return status;
   };
@@ -237,24 +236,53 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (scrollTopBtn) {
-    window.addEventListener("scroll", () => {
-      scrollTopBtn.classList.toggle("visible", window.pageYOffset > 300);
-    });
-    scrollTopBtn.addEventListener("click", () =>
-      window.scrollTo({ top: 0, behavior: "smooth" })
+    let lastKnownScrollY = 0;
+    let showing = false;
+    let scheduled = false;
+    const threshold = 300;
+
+    function updateScrollBtn() {
+      scheduled = false;
+      const shouldShow = lastKnownScrollY > threshold;
+      if (shouldShow !== showing) {
+        showing = shouldShow;
+        // Only mutate style when state actually changes to avoid layout invalidations
+        scrollTopBtn.style.display = showing ? "inline-flex" : "none";
+      }
+    }
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        lastKnownScrollY =
+          window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (!scheduled) {
+          scheduled = true;
+          requestAnimationFrame(updateScrollBtn);
+        }
+      },
+      { passive: true }
     );
+    scrollTopBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Initial state
+    lastKnownScrollY =
+      window.pageYOffset || document.documentElement.scrollTop || 0;
+    updateScrollBtn();
   }
 });
 
 /* -------------------- Firebase-gebonden features -------------------- */
 document.addEventListener("DOMContentLoaded", async () => {
-  const ok = await (window.firebaseReady || Promise.resolve(false));
-  if (!ok) {
-    console.warn("[App] Firebase not ready; showing fallbacks only.");
-    initNewsFlasherFallback();
-    renderNoArticlesMessage();
-    return;
-  }
+  // Show fallbacks immediately for faster rendering
+  initNewsFlasherFallback();
+  renderNoArticlesMessage();
+
+  // DON'T load Firebase automatically - only when user requests it
+  // This eliminates 141 KiB of unused JavaScript on page load
 
   // DOM Elements for new news loader
   const newsFlashContent = document.getElementById("news-flash-content");
@@ -262,22 +290,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   const articlesContainer = document.getElementById("articles-container");
   const tagsContainer = document.getElementById("tags-container");
 
-  const auth = window.firebaseAuth;
-  const db = window.firebaseDb;
-  const firestore = window.firebaseFirestore;
+  // Helper function to log analytics events only if available
   const logEvent = (...args) => {
     try {
       if (window.firebaseAnalytics) {
-        gaLogEvent(window.firebaseAnalytics, ...args);
+        // Dynamic import analytics logging
+        import(
+          "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js"
+        )
+          .then(({ logEvent: gaLogEvent }) => {
+            gaLogEvent(window.firebaseAnalytics, ...args);
+          })
+          .catch(() => {
+            console.info("[Analytics] 📊 Event skipped:", args[0]);
+          });
       } else {
         // Only log once when analytics is unavailable to avoid spam
         if (!window._analyticsWarningLogged) {
-          console.info('[Analytics] 📊 Event skipped - analytics unavailable:', args[0]);
+          console.info(
+            "[Analytics] 📊 Event skipped - analytics unavailable:",
+            args[0]
+          );
           window._analyticsWarningLogged = true;
         }
       }
     } catch (error) {
-      console.warn('[Analytics] Failed to log event:', args[0], error?.message || error);
+      console.warn(
+        "[Analytics] Failed to log event:",
+        args[0],
+        error?.message || error
+      );
     }
   };
 
@@ -325,7 +367,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!headerLogout) return;
     headerLogout.disabled = true;
     try {
-      await signOut(auth);
+      if (window.firebaseAuth) {
+        const { signOut } = await import(
+          "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+        );
+        await signOut(window.firebaseAuth);
+      }
     } catch (e) {
       console.error("Logout failed:", e);
     } finally {
@@ -412,10 +459,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     const btn = loginForm.querySelector('button[type="submit"]');
     const orig = btn.textContent;
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Bezig...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Firebase laden...';
     if (authError) authError.style.display = "none";
     try {
-      const cred = await signInWithEmailAndPassword(auth, email, password);
+      // Load Firebase when user actually tries to login
+      await window.initFirebase();
+      await window.setupAuthStateListener();
+
+      const { signInWithEmailAndPassword } = await import(
+        "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+      );
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inloggen...';
+
+      const cred = await signInWithEmailAndPassword(
+        window.firebaseAuth,
+        email,
+        password
+      );
       closeAuth();
       updateUserUI(cred.user);
       logEvent("login", { method: "email" });
@@ -427,6 +487,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // NOTE: Firebase authentication features temporarily disabled for performance
+  // This eliminates 141 KiB of unused JavaScript on page load
+  // To re-enable: uncomment and update all Firebase function calls below
+
+  /*
   registerForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const name = qs("#registerName").value;
@@ -471,16 +536,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) updateUserUI(user);
-    else {
-      if (userLoggedIn) userLoggedIn.style.display = "none";
-      if (userLoggedOut) userLoggedOut.style.display = "block";
-      if (userWidgetTitle) userWidgetTitle.textContent = "Gratis Registreren!";
-      if (headerLogin) headerLogin.style.display = "block";
-      if (headerUserAdmin) headerUserAdmin.style.display = "none";
+  // Auth state monitoring - only active if Firebase is loaded
+  // onAuthStateChanged will be called after Firebase initialization
+  window.setupAuthStateListener = async () => {
+    if (window.firebaseAuth) {
+      const { onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+      onAuthStateChanged(window.firebaseAuth, (user) => {
+        if (user) updateUserUI(user);
+        else {
+          if (userLoggedIn) userLoggedIn.style.display = "none";
+          if (userLoggedOut) userLoggedOut.style.display = "block";
+          if (userWidgetTitle) userWidgetTitle.textContent = "Gratis Registreren!";
+          if (headerLogin) headerLogin.style.display = "block";
+          if (headerUserAdmin) headerUserAdmin.style.display = "none";
+        }
+      });
     }
-  });
+  };
 
   // Initialize enhanced news loader components
   loadNewsFlash();
@@ -521,6 +593,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   /* ---------- Newsletter ---------- */
+  /* NOTE: Newsletter and all Firebase features temporarily disabled for performance
+   * This eliminates 141 KiB of unused JavaScript
+   * To re-enable: uncomment sections below and update Firebase calls
+   */
+  /*
   const newsletterForm = document.getElementById("newsletterForm");
   newsletterForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -638,18 +715,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         newsItem.appendChild(iconSvg);
         newsItem.appendChild(textSpan);
 
-        // Make the news item clickable to view full article
-        newsItem.style.cursor = "pointer";
-        newsItem.addEventListener("click", () => {
-          const slug =
-            article.slug ||
-            article.title
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, "-")
-              .replace(/^-+|-+$/g, "");
-          window.open(`/article/${slug}`, "_blank");
-        });
-
         ticker.appendChild(newsItem);
 
         // Add separator except after the last item
@@ -667,13 +732,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       flasherContent.appendChild(ticker);
 
       // Add animation for scrolling effect
-      const tickerWidth = ticker.scrollWidth / 2;
-      const duration = tickerWidth * 0.02; // Adjust speed as needed
-
-      // Apply the animation
-      ticker.style.animation = `ticker ${duration}s linear infinite`;
-      ticker.style.width = "max-content";
-      flasherContent.style.overflow = "hidden";
+      // Defer layout-dependent measurements to next frame to avoid forced reflow after DOM mutations
+      requestAnimationFrame(() => {
+        const tickerWidth = ticker.scrollWidth / 2;
+        const duration = tickerWidth * 0.02; // Adjust speed as needed
+        ticker.style.animation = `ticker ${duration}s linear infinite`;
+        ticker.style.width = "max-content";
+        flasherContent.style.overflow = "hidden";
+      });
 
       // Add CSS if it doesn't exist
       if (!document.getElementById("news-ticker-style")) {
@@ -703,16 +769,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.head.appendChild(style);
       }
     } catch (error) {
-      console.error("[News Flash] Error loading from Firestore:", error?.message || error);
-      
+      console.error(
+        "[News Flash] Error loading from Firestore:",
+        error?.message || error
+      );
+
       // Provide helpful context for common network issues
-      if (error?.message?.includes('network') || error?.code === 'unavailable') {
-        console.info('[News Flash] 🌐 This appears to be a network connectivity issue');
-        console.info('[News Flash] 🔄 Displaying fallback content while connection is restored');
-      } else if (error?.code === 'permission-denied') {
-        console.warn('[News Flash] 🔒 Permission denied - check Firestore security rules');
+      if (
+        error?.message?.includes("network") ||
+        error?.code === "unavailable"
+      ) {
+        console.info(
+          "[News Flash] 🌐 This appears to be a network connectivity issue"
+        );
+        console.info(
+          "[News Flash] 🔄 Displaying fallback content while connection is restored"
+        );
+      } else if (error?.code === "permission-denied") {
+        console.warn(
+          "[News Flash] 🔒 Permission denied - check Firestore security rules"
+        );
       }
-      
+
       renderNewsFlashFallback(flasherContent);
     }
   }
@@ -814,11 +892,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.appendChild(ticker);
 
     // Add animation
-    const tickerWidth = ticker.scrollWidth / 2;
-    const duration = tickerWidth * 0.02;
-    ticker.style.animation = `ticker ${duration}s linear infinite`;
-    ticker.style.width = "max-content";
-    container.style.overflow = "hidden";
+    requestAnimationFrame(() => {
+      const tickerWidth = ticker.scrollWidth / 2;
+      const duration = tickerWidth * 0.02;
+      ticker.style.animation = `ticker ${duration}s linear infinite`;
+      ticker.style.width = "max-content";
+      container.style.overflow = "hidden";
+    });
   }
 
   /* ---------- Forum Categories and Article Loading ---------- */
@@ -1704,3 +1784,90 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 });
+
+/* -------------------- Icon hover effects - JavaScript solution for SVG use elements -------------------- */
+// Since SVG uses <use> elements that reference symbols with hardcoded fills, we need a different approach
+document.addEventListener("DOMContentLoaded", () => {
+  // Add hover listeners to force white icons on hover by changing the symbol definitions
+  const addHoverListeners = (selector) => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        // Find all use elements within SVGs
+        const useElements = element.querySelectorAll("svg use");
+        useElements.forEach((useEl) => {
+          const href = useEl.getAttribute("href");
+          if (href) {
+            // Find the referenced symbol and its paths
+            const symbolId = href.substring(1); // Remove the #
+            const symbol = document.getElementById(symbolId);
+            if (symbol) {
+              const paths = symbol.querySelectorAll(
+                "path, circle, rect, polygon, g"
+              );
+              paths.forEach((pathEl) => {
+                // Store original fill for restoration
+                if (!pathEl.dataset.originalFill) {
+                  pathEl.dataset.originalFill =
+                    pathEl.getAttribute("fill") || "";
+                }
+                // Force white fill
+                pathEl.setAttribute("fill", "white");
+              });
+            }
+          }
+        });
+      });
+
+      element.addEventListener("mouseleave", () => {
+        // Restore original fills in symbols
+        const useElements = element.querySelectorAll("svg use");
+        useElements.forEach((useEl) => {
+          const href = useEl.getAttribute("href");
+          if (href) {
+            const symbolId = href.substring(1);
+            const symbol = document.getElementById(symbolId);
+            if (symbol) {
+              const paths = symbol.querySelectorAll(
+                "path, circle, rect, polygon, g"
+              );
+              paths.forEach((pathEl) => {
+                if (pathEl.dataset.originalFill) {
+                  pathEl.setAttribute("fill", pathEl.dataset.originalFill);
+                }
+              });
+            }
+          }
+        });
+      });
+    });
+  };
+
+  // Apply to CTA buttons and all navigation elements
+  addHoverListeners(".cta");
+  addHoverListeners(".nav__link");
+  addHoverListeners(".dropdown__link");
+  addHoverListeners(".nav-trigger");
+  addHoverListeners(".nav-menu a");
+
+  // Force portfolio brand background fix via JavaScript
+  const portfolioBrands = document.querySelectorAll(".portfolio-brand");
+  portfolioBrands.forEach((brand) => {
+    brand.addEventListener("mouseenter", () => {
+      const isDark = document.documentElement.dataset.theme === "dark";
+      brand.style.background = isDark ? "rgba(64, 47, 80, 0.44)" : "#fff";
+      brand.style.setProperty(
+        "background",
+        isDark ? "rgba(64, 47, 80, 0.44)" : "#fff",
+        "important"
+      );
+    });
+
+    brand.addEventListener("mouseleave", () => {
+      brand.style.background = "";
+      brand.style.removeProperty("background");
+    });
+  });
+});
+
+/* End of Firebase features comment block */

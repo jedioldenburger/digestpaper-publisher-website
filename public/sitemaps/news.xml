@@ -3,7 +3,7 @@
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
     <loc>https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar</loc>
-    <lastmod>2025-09-18T01:47:19+02:00</lastmod>
+    <lastmod>2025-09-18T19:03:10+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <news:news>
@@ -11,23 +11,8 @@
         <news:name>DigestPaper.com</news:name>
         <news:language>nl</news:language>
       </news:publication>
-      <news:publication_date>2025-09-18T01:47:19+02:00</news:publication_date>
+      <news:publication_date>2025-09-18T19:03:10+02:00</news:publication_date>
       <news:title>Drie overleden personen aangetroffen in woning in Alkmaar</news:title>
-      <news:keywords>Nederland, Nieuws, Actueel</news:keywords>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://digestpaper.com/nieuws/twee-vliegende-autos-van-xpeng-botsen-tijdens-oefening-voor-chinese-luchtshow</loc>
-    <lastmod>2025-09-18T01:47:25+02:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>DigestPaper.com</news:name>
-        <news:language>nl</news:language>
-      </news:publication>
-      <news:publication_date>2025-09-18T01:47:25+02:00</news:publication_date>
-      <news:title>Twee vliegende auto's van Xpeng botsen tijdens oefening voor Chinese luchtshow</news:title>
       <news:keywords>Nederland, Nieuws, Actueel</news:keywords>
     </news:news>
   </url>

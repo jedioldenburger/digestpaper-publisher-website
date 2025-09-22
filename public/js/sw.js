@@ -1,7 +1,7 @@
 // DigestPaper Media Service Worker
-// Version: 2025-09-17-v2 (Updated to clear cache issues)
+// Version: 2025-09-17-v4 (Switch to unminified style.css only)
 
-const CACHE_NAME = "digestpaper-v2025-09-17-v2";
+const CACHE_NAME = "digestpaper-v2025-09-17-v4";
 const urlsToCache = [
   "/",
   "/css/style.css",

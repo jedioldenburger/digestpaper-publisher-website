@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="{{page.lang | default: 'nl'}}" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic Page Meta -->
+    <title>{{page.title | default: 'DigestPaper Open Data'}}</title>
+    <meta name="description" content="{{page.description | default: 'DigestPaper open datasets: transparante data voor onderzoek en analyse.'}}" />
+    <meta name="keywords" content="{{page.keywords | join: ', ' | default: 'open data, dataset, transparantie, onderzoek'}}" />
+
+    <!-- Canonical and Language -->
+    <link rel="canonical" href="{{page.canonical_url | default: page.url | prepend: site.url}}" />
+    <meta name="language" content="{{page.lang | default: 'nl-NL'}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{page.title}}" />
+    <meta property="og:description" content="{{page.description}}" />
+    <meta property="og:url" content="{{page.canonical_url | default: page.url | prepend: site.url}}" />
+    <meta property="og:site_name" content="DigestPaper" />
+    <meta property="og:locale" content="{{page.lang | default: 'nl_NL'}}" />
+    <meta property="og:image" content="{{site.url}}/favicon/nebula-clean-icon-512.png" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{page.title}}" />
+    <meta name="twitter:description" content="{{page.description}}" />
+    <meta name="twitter:image" content="{{site.url}}/favicon/nebula-clean-icon-512.png" />
+
+    <!-- Creative Commons License (if applicable) -->
+    {% if page.license %}
+    <link rel="license" href="{{page.license}}" />
+    {% endif %}
+
+    <!-- JSON-LD: Dataset for Google Dataset Search -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "NewsMediaOrganization",
+            "@id": "{{site.url}}/#org",
+            "name": "DigestPaper",
+            "url": "{{site.url}}/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "{{site.url}}/favicon/nebula-clean-icon-512.png",
+              "width": 512,
+              "height": 512
+            }
+          },
+          {
+            "@type": "Dataset",
+            "@id": "{{page.canonical_url | default: page.url | prepend: site.url}}/#dataset",
+            "url": "{{page.canonical_url | default: page.url | prepend: site.url}}",
+            "name": "{{page.title}}",
+            "description": "{{page.description}}",
+            "identifier": "{{page.dataset_id | default: page.slug}}",
+            {% if page.keywords %}
+            "keywords": [
+              {% for keyword in page.keywords %}
+              "{{keyword}}"{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            "creator": {
+              "@type": "Organization",
+              "@id": "{{site.url}}/#org"
+            },
+            "publisher": { "@id": "{{site.url}}/#org" },
+            "provider": { "@id": "{{site.url}}/#org" },
+            "datePublished": "{{page.date_published | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "dateModified": "{{page.date_modified | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            {% if page.dataset_version %}
+            "version": "{{page.dataset_version}}",
+            {% endif %}
+            "inLanguage": "{{page.lang | default: 'nl-NL'}}",
+            {% if page.license %}
+            "license": "{{page.license}}",
+            {% endif %}
+            "copyrightNotice": "© {{page.date | default: site.time | date: '%Y'}} DigestPaper Publishing B.V.",
+            {% if page.dataset_size %}
+            "contentSize": "{{page.dataset_size}}",
+            {% endif %}
+            {% if page.dataset_format %}
+            "encodingFormat": [
+              {% for format in page.dataset_format %}
+              "{{format}}"{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            {% if page.dataset_distribution %}
+            "distribution": [
+              {% for dist in page.dataset_distribution %}
+              {
+                "@type": "DataDownload",
+                "contentUrl": "{{dist.url}}",
+                "encodingFormat": "{{dist.format}}",
+                {% if dist.size %}
+                "contentSize": "{{dist.size}}",
+                {% endif %}
+                "name": "{{dist.name | default: page.title}} ({{dist.format}})"
+              }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            {% if page.temporal_coverage %}
+            "temporalCoverage": "{{page.temporal_coverage}}",
+            {% endif %}
+            {% if page.spatial_coverage %}
+            "spatialCoverage": {
+              "@type": "Place",
+              "name": "{{page.spatial_coverage.name | default: page.spatial_coverage}}"
+              {% if page.spatial_coverage.geo %}
+              ,"geo": {
+                "@type": "GeoShape",
+                {% if page.spatial_coverage.geo.polygon %}
+                "polygon": "{{page.spatial_coverage.geo.polygon}}"
+                {% else %}
+                "box": "{{page.spatial_coverage.geo.box}}"
+                {% endif %}
+              }
+              {% endif %}
+            },
+            {% endif %}
+            {% if page.measurement_technique %}
+            "measurementTechnique": "{{page.measurement_technique}}",
+            {% endif %}
+            {% if page.variable_measured %}
+            "variableMeasured": [
+              {% for variable in page.variable_measured %}
+              {
+                "@type": "PropertyValue",
+                "name": "{{variable.name}}",
+                {% if variable.description %}
+                "description": "{{variable.description}}",
+                {% endif %}
+                {% if variable.unit %}
+                "unitText": "{{variable.unit}}"
+                {% endif %}
+              }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            "isAccessibleForFree": {{page.is_free | default: true}},
+            "usageInfo": "{{site.url}}/policies/terms-of-service/"
+          }
+        ]
+      }
+    </script>
+  </head>
+
+  <body{% if page.body_class %} class="{{page.body_class}}"{% endif %}{% if page.microdata_itemscope %} {{page.microdata_itemscope}}{% else %} itemscope itemtype="https://schema.org/Dataset"{% endif %}>
+    <!-- Body content will be inserted here by the template engine -->
+  </body>
+</html>

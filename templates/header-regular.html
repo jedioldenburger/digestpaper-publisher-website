@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="{{page.lang | default: 'nl'}}">
+  <head>
+    <!-- Charset & viewport -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Security Headers -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://firebasejs.googleapis.com https://www.gstatic.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://firebasejs.googleapis.com https://www.gstatic.com https://*.firebaseio.com https://*.googleapis.com https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com wss://*.firebaseio.com; object-src 'none'; base-uri 'self';"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta
+      http-equiv="Referrer-Policy"
+      content="strict-origin-when-cross-origin"
+    />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+    />
+
+    <!-- Primary SEO -->
+    <title>
+      {{page.title | default: 'DigestPaper – Journalistiek, nieuws &
+      onderzoek'}}
+    </title>
+    <meta
+      name="description"
+      content="{{page.description | default: 'DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.'}}"
+    />
+    <meta
+      name="robots"
+      content="{{page.robots | default: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}}"
+    />
+    <meta
+      name="googlebot"
+      content="{{page.robots | default: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'}}"
+    />
+    <meta name="author" content="{{page.author | default: 'DigestPaper'}}" />
+    <meta name="content-language" content="{{page.lang | default: 'nl-NL'}}" />
+    <meta name="generator" content="DigestPaper CMS v2.0" />
+
+    <!-- Canonical & hreflang -->
+    <link
+      rel="canonical"
+      href="{{page.canonical_url | default: page.url | prepend: site.url}}"
+    />
+    {% if page.hreflang %} {% for lang in page.hreflang %}
+    <link rel="alternate" hreflang="{{lang.code}}" href="{{lang.url}}" />
+    {% endfor %} {% else %}
+    <link
+      rel="alternate"
+      hreflang="nl"
+      href="{{page.url | prepend: site.url}}"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="{{page.url | prepend: site.url}}"
+    />
+    {% endif %}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="{{page.og_type | default: 'website'}}" />
+    <meta property="og:site_name" content="DigestPaper" />
+    <meta
+      property="og:title"
+      content="{{page.og_title | default: page.title | default: 'DigestPaper – Journalistiek, nieuws & onderzoek'}}"
+    />
+    <meta
+      property="og:description"
+      content="{{page.og_description | default: page.description | default: 'DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.'}}"
+    />
+    <meta
+      property="og:url"
+      content="{{page.canonical_url | default: page.url | prepend: site.url}}"
+    />
+    <meta
+      property="og:image"
+      content="{{page.og_image | default: site.url | append: '/favicon/og-1200x630.png'}}"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="{{page.og_image | default: site.url | append: '/favicon/og-1200x630.png'}}"
+    />
+    <meta
+      property="og:image:width"
+      content="{{page.og_image_width | default: '1200'}}"
+    />
+    <meta
+      property="og:image:height"
+      content="{{page.og_image_height | default: '630'}}"
+    />
+    <meta
+      property="og:image:alt"
+      content="{{page.og_image_alt | default: page.title | default: 'DigestPaper – Journalistiek, nieuws & onderzoek'}}"
+    />
+    <meta
+      property="og:locale"
+      content="{{page.og_locale | default: 'nl_NL'}}"
+    />
+
+    <!-- Twitter -->
+    <meta
+      name="twitter:card"
+      content="{{page.twitter_card | default: 'summary_large_image'}}"
+    />
+    <meta
+      name="twitter:title"
+      content="{{page.twitter_title | default: page.title | default: 'DigestPaper – Journalistiek, nieuws & onderzoek'}}"
+    />
+    <meta
+      name="twitter:description"
+      content="{{page.twitter_description | default: page.description | default: 'DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.'}}"
+    />
+    <meta
+      name="twitter:image"
+      content="{{page.twitter_image | default: page.og_image | default: site.url | append: '/favicon/og-1200x630.png'}}"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="{{page.twitter_image_alt | default: page.og_image_alt | default: page.title | default: 'DigestPaper – Journalistiek, nieuws & onderzoek'}}"
+    />
+    <meta
+      name="twitter:site"
+      content="{{site.twitter | default: '@digestpaper'}}"
+    />
+    <meta
+      name="twitter:creator"
+      content="{{page.twitter_creator | default: site.twitter | default: '@digestpaper'}}"
+    />
+
+    <!-- App / UX -->
+    <meta
+      name="theme-color"
+      content="#0f172a"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#f8fafc"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="application-name" content="DigestPaper" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Icons (all live in /favicon) -->
+    <link rel="icon" href="/favicon/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/nebula-clean-icon-16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/nebula-clean-icon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/favicon/nebula-clean-icon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="/favicon/nebula-clean-icon-512.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/favicon/ios-icon-120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/favicon/ios-icon-152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="167x167"
+      href="/favicon/ios-icon-167.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/ios-icon-180.png"
+    />
+    <link
+      rel="mask-icon"
+      href="/favicon/nebula-clean-sprite.svg"
+      color="#6D4DF7"
+    />
+
+    <!-- Windows -->
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="msapplication-TileColor" content="#0f172a" />
+
+    <!-- Manifest (root) -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Feeds & sitemap -->
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="DigestPaper — RSS"
+      href="{{site.url}}/feed.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="DigestPaper — Atom"
+      href="{{site.url}}/atom.xml"
+    />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      href="{{site.url}}/sitemap.xml"
+    />
+
+    <!-- Verification -->
+    <meta
+      name="google-site-verification"
+      content="Bfdhhp4SUxy8XbOJEjulnFvHQey-cb-VpTGLKRSTQYo"
+    />
+
+    <!-- Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://firebasejs.googleapis.com" />
+    {% if page.featured_image %}
+    <link
+      rel="preload"
+      as="image"
+      href="{{page.featured_image}}"
+      fetchpriority="high"
+    />
+    {% else %}
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/digestpaper-media-logo.png"
+      fetchpriority="high"
+    />
+    {% endif %}
+
+    <!-- Publisher manifest -->
+    <link rel="publisher" href="/publisher.json" type="application/json" />
+
+    <!-- Optional keywords -->
+    <meta
+      name="keywords"
+      content="{{page.keywords | default: 'DigestPaper, uitgever, redactionele richtlijnen, journalistiek, fact-checking, correcties, financiering, transparantie, media, Nederland, onderzoeksjournalistiek, onafhankelijke media'}}"
+    />
+    <meta
+      name="news_keywords"
+      content="{{page.news_keywords | default: 'uitgever, journalistiek beleid, transparantie, fact-checking, correcties, onderzoeksjournalistiek'}}"
+    />
+    <meta
+      name="classification"
+      content="{{page.classification | default: 'News, Journalism, Publisher'}}"
+    />
+    <meta name="coverage" content="{{page.coverage | default: 'Worldwide'}}" />
+    <meta
+      name="distribution"
+      content="{{page.distribution | default: 'Global'}}"
+    />
+    <meta name="rating" content="{{page.rating | default: 'General'}}" />
+
+    <!-- Geo (optional) -->
+    {% if page.geo %}
+    <meta
+      name="geographic.region"
+      content="{{page.geo.region | default: 'NL'}}"
+    />
+    <meta
+      name="geographic.placename"
+      content="{{page.geo.placename | default: 'Amsterdam'}}"
+    />
+    <meta
+      name="geographic.position"
+      content="{{page.geo.position | default: '52.3728;4.8936'}}"
+    />
+    <meta
+      name="ICBM"
+      content="{{page.geo.icbm | default: '52.3728, 4.8936'}}"
+    />
+    {% endif %}
+
+    <!-- Dublin Core -->
+    <meta
+      name="dc.title"
+      content="{{page.title | default: 'DigestPaper – Journalistiek, nieuws & onderzoek'}}"
+    />
+    <meta
+      name="dc.creator"
+      content="{{page.author | default: 'DigestPaper'}}"
+    />
+    <meta
+      name="dc.subject"
+      content="{{page.dc_subject | default: 'Uitgever, Redactionele Richtlijnen, Journalistiek, Fact-checking, Correcties, Financiering, Transparantie'}}"
+    />
+    <meta
+      name="dc.description"
+      content="{{page.description | default: 'DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.'}}"
+    />
+    <meta name="dc.publisher" content="DigestPaper Publishing B.V." />
+    <meta name="dc.format" content="text/html" />
+    <meta
+      name="dc.identifier"
+      content="{{page.canonical_url | default: page.url | prepend: site.url}}"
+    />
+    <meta name="dc.language" content="{{page.lang | default: 'nl-NL'}}" />
+    <meta
+      name="dc.coverage"
+      content="{{page.dc_coverage | default: 'Nederland; EU; Wereldwijd'}}"
+    />
+    <meta
+      name="dc.rights"
+      content="Copyright {{site.time | date: '%Y'}} DigestPaper Publishing B.V."
+    />
+
+    <!-- Google Fonts: preload + noscript fallback -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap"
+      />
+    </noscript>
+
+    <!-- CSS & scripts -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <script defer src="/js/theme.js"></script>
+    <script defer src="/js/consent.js"></script>
+
+    {% include 'svg-icons' %}
+
+    <!-- JSON-LD: Global NewsMediaOrganization + WebSite + WebPage + BreadcrumbList -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "ImageObject",
+            "@id": "{{site.url}}/#logo",
+            "url": "{{site.url}}/favicon/nebula-clean-icon-512.png",
+            "contentUrl": "{{site.url}}/favicon/nebula-clean-icon-512.png",
+            "width": 512,
+            "height": 512,
+            "thumbnailUrl": "{{site.url}}/favicon/nebula-clean-icon-128.png",
+            "caption": "DigestPaper Logo"
+          },
+          {
+            "@type": "NewsMediaOrganization",
+            "@id": "{{site.url}}/#org",
+            "name": "DigestPaper",
+            "alternateName": ["DigestPaper", "DigestPaper Publishing B.V."],
+            "url": "{{site.url}}/",
+            "logo": { "@id": "{{site.url}}/#logo" },
+            "email": "jedi@xcom.dev",
+            "telephone": "+31648319165",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Sint Olofssteeg 4",
+              "postalCode": "1012AK",
+              "addressLocality": "Amsterdam",
+              "addressRegion": "Noord-Holland",
+              "addressCountry": "NL"
+            },
+            "foundingDate": "2025-08-01",
+            "foundingLocation": { "@type": "Place", "name": "Amsterdam, NL" },
+            "areaServed": ["NL", "EU", "Worldwide"],
+            "numberOfEmployees": { "@type": "QuantitativeValue", "value": 10 },
+            "availableLanguage": ["nl-NL", "en-US"],
+            "founder": { "@id": "{{site.url}}/#person-jedi-oldenburger" },
+            "employee": { "@id": "{{site.url}}/#person-jedi-oldenburger" },
+            "publishingPrinciples": "{{site.url}}/policies/principles/",
+            "verificationFactCheckingPolicy": "{{site.url}}/policies/fact-checking/",
+            "correctionsPolicy": "{{site.url}}/policies/corrections/",
+            "ownershipFundingInfo": [
+              "{{site.url}}/about/ownership/",
+              "{{site.url}}/about/funding/"
+            ],
+            "missionCoveragePrioritiesPolicy": "{{site.url}}/policies/principles/",
+            "actionableFeedbackPolicy": "{{site.url}}/contact/",
+            "ethicsPolicy": "{{site.url}}/policies/principles/ethics",
+            "diversityPolicy": "{{site.url}}/policies/principles/diversity",
+            "diversityStaffingReport": "{{site.url}}/about/masthead/diversity",
+            "unnamedSourcesPolicy": "{{site.url}}/policies/principles/sources",
+            "noBylinesPolicy": "{{site.url}}/policies/principles/bylines",
+            "privacyPolicy": "{{site.url}}/policies/privacy/",
+            "cookiePolicy": "{{site.url}}/policies/cookie-policy/",
+            "termsOfService": "{{site.url}}/policies/terms-of-service/",
+            "accessibilityPolicy": "{{site.url}}/policies/accessibility/",
+            "securityPolicy": "{{site.url}}/policies/security-policy/",
+            "publisherImprint": "{{site.url}}/about/ownership/",
+            "masthead": "{{site.url}}/about/masthead/",
+            "sameAs": [
+              "https://www.linkedin.com/company/digestpaper/",
+              "https://github.com/digestpaper",
+              "https://www.patreon.com/cw/digestpaper"
+            ],
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "contactType": "Nieuwsredactie",
+                "email": "jedi@xcom.dev",
+                "url": "{{site.url}}/contact/",
+                "availableLanguage": ["nl","en"],
+                "areaServed": "Worldwide"
+              },
+              {
+                "@type": "ContactPoint",
+                "contactType": "Pers & zakelijk",
+                "email": "jedi@xcom.dev",
+                "url": "{{site.url}}/contact/press/",
+                "availableLanguage": ["nl","en"],
+                "areaServed": "Worldwide"
+              }
+            ],
+            "subOrganization": [
+              { "@type": "Organization", "name": "Politie-Forum.nl", "url": "https://politie-forum.nl/" },
+              { "@type": "Organization", "name": "Politie-NL.nl", "url": "https://politie-nl.nl/" },
+              { "@type": "Organization", "name": "OnderzoekPortaal.nl", "url": "https://onderzoekportaal.nl/" },
+              { "@type": "Organization", "name": "OnderzoekPlatform.nl", "url": "https://onderzoekplatform.nl/" },
+              { "@type": "Organization", "name": "Cybersecurity-AI.eu", "url": "https://cybersecurity-ai.eu/" },
+              { "@type": "Organization", "name": "HeadlinesMagazine.com", "url": "https://headlinesmagazine.com/" },
+              { "@type": "Organization", "name": "HetNieuws.app", "url": "https://hetnieuws.app/" },
+              { "@type": "Organization", "name": "CyberSecurityAD.com", "url": "https://cybersecurityad.com/" }
+            ]
+          },
+          {
+            "@type": "Person",
+            "@id": "{{site.url}}/#person-jedi-oldenburger",
+            "name": "Jedi Oldenburger",
+            "jobTitle": "Hoofdredacteur",
+            "worksFor": { "@id": "{{site.url}}/#org" },
+            "affiliation": { "@id": "{{site.url}}/#org" },
+            "email": "jedi@xcom.dev",
+            "url": "{{site.url}}/about/masthead/jedioldenburger",
+            "knowsAbout": [
+              "Investigative Journalism",
+              "Media Law",
+              "Government Transparency",
+              "Cybersecurity",
+              "Digital Rights"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "{{site.url}}/#website",
+            "url": "{{site.url}}/",
+            "name": "DigestPaper",
+            "alternateName": "DigestPaper Uitgever",
+            "description": "DigestPaper: onafhankelijke en betrouwbare journalistiek. Nieuws, analyses en onderzoek met transparantie, fact-checking en duidelijke richtlijnen.",
+            "inLanguage": "{{page.lang | default: 'nl-NL'}}",
+            "publisher": { "@id": "{{site.url}}/#org" },
+            "copyrightHolder": { "@id": "{{site.url}}/#org" },
+            "copyrightYear": "{{site.time | date: '%Y'}}",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "@id": "{{site.url}}/#search",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "{{site.url}}/search?q={search_term_string}",
+                  "actionPlatform": ["https://schema.org/DesktopWebPlatform","https://schema.org/MobileWebPlatform"]
+                },
+                "query-input": "required name=search_term_string"
+              }
+            ]
+          },
+          {
+            "@type": ["WebPage", "{{page.schema_type | default: 'WebPage'}}"],
+            "@id": "{{page.canonical_url | default: page.url | prepend: site.url}}/#webpage",
+            "url": "{{page.canonical_url | default: page.url | prepend: site.url}}",
+            "name": "{{page.title | default: 'DigestPaper'}}",
+            "description": "{{page.description | default: 'DigestPaper: onafhankelijke en betrouwbare journalistiek.'}}",
+            "isPartOf": { "@id": "{{site.url}}/#website" },
+            "inLanguage": "{{page.lang | default: 'nl-NL'}}",
+            {% if page.breadcrumb %}
+            "breadcrumb": { "@id": "{{page.canonical_url | default: page.url | prepend: site.url}}/#breadcrumb" },
+            {% endif %}
+            {% if page.featured_image %}
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "{{page.featured_image}}",
+              "contentUrl": "{{page.featured_image}}",
+              "width": {{page.featured_image_width | default: 1200}},
+              "height": {{page.featured_image_height | default: 630}}
+            },
+            {% else %}
+            "primaryImageOfPage": { "@id": "{{site.url}}/#logo" },
+            {% endif %}
+            "datePublished": "{{page.date_published | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "dateModified": "{{page.date_modified | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "lastReviewed": "{{page.last_reviewed | default: page.date_modified | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "publisher": { "@id": "{{site.url}}/#org" },
+            "copyrightHolder": { "@id": "{{site.url}}/#org" },
+            "isAccessibleForFree": {{page.is_free | default: true}},
+            "creativeWorkStatus": "Published"
+          }
+          {% if page.breadcrumb %}
+          ,{
+            "@type": "BreadcrumbList",
+            "@id": "{{page.canonical_url | default: page.url | prepend: site.url}}/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "{{site.url}}/"
+              }
+              {% for crumb in page.breadcrumb %}
+              ,{
+                "@type": "ListItem",
+                "position": {{forloop.index | plus: 1}},
+                "name": "{{crumb.name}}",
+                "item": "{{crumb.url | prepend: site.url}}"
+              }
+              {% endfor %}
+            ]
+          }
+          {% endif %}
+        ]
+      }
+    </script>
+  </head>
+
+  <body{%
+    if
+    page.body_class
+    %}
+    class="{{page.body_class}}"
+    {%
+    endif
+    %}{%
+    if
+    page.microdata_itemscope
+    %}
+    {{page.microdata_itemscope}}{%
+    endif
+    %}
+  >
+  </body{%>
+</html>

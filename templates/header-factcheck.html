@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="{{page.lang | default: 'nl'}}" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic Page Meta -->
+    <title>{{page.title | default: 'DigestPaper Fact Check'}}</title>
+    <meta name="description" content="{{page.description | default: 'DigestPaper fact-checking: onafhankelijke verificatie van claims en uitspraken.'}}" />
+    <meta name="keywords" content="{{page.keywords | join: ', ' | default: 'fact check, verificatie, waarheidsgetrouwheid, claims'}}" />
+    <meta name="author" content="{{page.author.name | default: 'DigestPaper Redactie'}}" />
+
+    <!-- Canonical and Language -->
+    <link rel="canonical" href="{{page.canonical_url | default: page.url | prepend: site.url}}" />
+    <meta name="language" content="{{page.lang | default: 'nl-NL'}}" />
+
+    <!-- Open Graph for Fact Checks -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{page.title}}" />
+    <meta property="og:description" content="{{page.description}}" />
+    <meta property="og:url" content="{{page.canonical_url | default: page.url | prepend: site.url}}" />
+    <meta property="og:site_name" content="DigestPaper" />
+    <meta property="og:locale" content="{{page.lang | default: 'nl_NL'}}" />
+    {% if page.featured_image %}
+    <meta property="og:image" content="{{page.featured_image}}" />
+    <meta property="og:image:width" content="{{page.featured_image_width | default: 1200}}" />
+    <meta property="og:image:height" content="{{page.featured_image_height | default: 630}}" />
+    {% else %}
+    <meta property="og:image" content="{{site.url}}/favicon/nebula-clean-icon-512.png" />
+    {% endif %}
+
+    <!-- Article-specific Open Graph -->
+    <meta property="article:published_time" content="{{page.date_published | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}" />
+    <meta property="article:modified_time" content="{{page.date_modified | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}" />
+    <meta property="article:section" content="{{page.article_section | default: 'Fact Check'}}" />
+    {% for tag in page.tags %}
+    <meta property="article:tag" content="{{tag}}" />
+    {% endfor %}
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{page.title}}" />
+    <meta name="twitter:description" content="{{page.description}}" />
+    {% if page.featured_image %}
+    <meta name="twitter:image" content="{{page.featured_image}}" />
+    {% else %}
+    <meta name="twitter:image" content="{{site.url}}/favicon/nebula-clean-icon-512.png" />
+    {% endif %}
+
+    <!-- Copyright and Licensing -->
+    {% if page.license %}
+    <link rel="license" href="{{page.license}}" />
+    {% endif %}
+
+    <!-- JSON-LD: ClaimReview for Fact Check Rich Results -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "NewsMediaOrganization",
+            "@id": "{{site.url}}/#org",
+            "name": "DigestPaper",
+            "url": "{{site.url}}/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "{{site.url}}/favicon/nebula-clean-icon-512.png",
+              "width": 512,
+              "height": 512
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/digestpaper/",
+              "https://github.com/digestpaper"
+            ]
+          },
+          {
+            "@type": "ClaimReview",
+            "@id": "{{page.canonical_url | default: page.url | prepend: site.url}}/#claimreview",
+            "url": "{{page.canonical_url | default: page.url | prepend: site.url}}",
+            "headline": "{{page.title}}",
+            "claimReviewed": "{{page.claim_reviewed | default: page.claim}}",
+            "datePublished": "{{page.date_published | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "dateModified": "{{page.date_modified | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            {% if page.claim_source %}
+            "itemReviewed": {
+              "@type": "CreativeWork",
+              "name": "{{page.claim_source.title | default: page.claim_reviewed}}",
+              {% if page.claim_source.url %}
+              "url": "{{page.claim_source.url}}",
+              {% endif %}
+              {% if page.claim_source.author %}
+              "author": {
+                "@type": "{{page.claim_source.author.type | default: 'Person'}}",
+                "name": "{{page.claim_source.author.name}}"
+                {% if page.claim_source.author.url %}
+                ,"url": "{{page.claim_source.author.url}}"
+                {% endif %}
+              },
+              {% endif %}
+              "datePublished": "{{page.claim_source.date | default: page.claim_date}}"
+            },
+            {% endif %}
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "{{page.rating_value | default: 1}}",
+              "bestRating": "{{page.best_rating | default: 5}}",
+              "worstRating": "{{page.worst_rating | default: 1}}",
+              "alternateName": "{{page.rating_label | default: 'Onwaar'}}"
+            },
+            {% if page.author %}
+            "author": {
+              "@type": "Person",
+              "name": "{{page.author.name | default: page.author}}",
+              {% if page.author.url %}
+              "url": "{{page.author.url}}",
+              {% endif %}
+              "worksFor": { "@id": "{{site.url}}/#org" }
+            },
+            {% else %}
+            "author": { "@id": "{{site.url}}/#org" },
+            {% endif %}
+            "publisher": { "@id": "{{site.url}}/#org" },
+            "inLanguage": "{{page.lang | default: 'nl-NL'}}",
+            "isAccessibleForFree": {{page.is_free | default: true}},
+            "copyrightNotice": "© {{page.date | default: site.time | date: '%Y'}} DigestPaper Publishing B.V."
+          }
+        ]
+      }
+    </script>
+  </head>
+
+  <body{% if page.body_class %} class="{{page.body_class}}"{% endif %}{% if page.microdata_itemscope %} {{page.microdata_itemscope}}{% else %} itemscope itemtype="https://schema.org/ClaimReview"{% endif %}>
+    <!-- Body content will be inserted here by the template engine -->
+  </body>
+</html>

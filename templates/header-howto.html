@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="{{page.lang | default: 'nl'}}" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic Page Meta -->
+    <title>{{page.title | default: 'DigestPaper Handleiding'}}</title>
+    <meta name="description" content="{{page.description | default: 'DigestPaper handleidingen: stap-voor-stap instructies voor veiligheid en privacy.'}}" />
+    <meta name="keywords" content="{{page.keywords | join: ', ' | default: 'handleiding, tutorial, instructies, privacy, veiligheid'}}" />
+
+    <!-- Canonical and Language -->
+    <link rel="canonical" href="{{page.canonical_url | default: page.url | prepend: site.url}}" />
+    <meta name="language" content="{{page.lang | default: 'nl-NL'}}" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{page.title}}" />
+    <meta property="og:description" content="{{page.description}}" />
+    <meta property="og:url" content="{{page.canonical_url | default: page.url | prepend: site.url}}" />
+    <meta property="og:site_name" content="DigestPaper" />
+    <meta property="og:locale" content="{{page.lang | default: 'nl_NL'}}" />
+    {% if page.featured_image %}
+    <meta property="og:image" content="{{page.featured_image}}" />
+    <meta property="og:image:width" content="{{page.featured_image_width | default: 1200}}" />
+    <meta property="og:image:height" content="{{page.featured_image_height | default: 630}}" />
+    {% else %}
+    <meta property="og:image" content="{{site.url}}/favicon/nebula-clean-icon-512.png" />
+    {% endif %}
+
+    <!-- Article-specific Open Graph -->
+    <meta property="article:published_time" content="{{page.date_published | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}" />
+    <meta property="article:modified_time" content="{{page.date_modified | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}" />
+    <meta property="article:section" content="{{page.article_section | default: 'Handleiding'}}" />
+    {% for tag in page.tags %}
+    <meta property="article:tag" content="{{tag}}" />
+    {% endfor %}
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{page.title}}" />
+    <meta name="twitter:description" content="{{page.description}}" />
+    {% if page.featured_image %}
+    <meta name="twitter:image" content="{{page.featured_image}}" />
+    {% else %}
+    <meta name="twitter:image" content="{{site.url}}/favicon/nebula-clean-icon-512.png" />
+    {% endif %}
+
+    <!-- JSON-LD: HowTo for Rich Results -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "NewsMediaOrganization",
+            "@id": "{{site.url}}/#org",
+            "name": "DigestPaper",
+            "url": "{{site.url}}/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "{{site.url}}/favicon/nebula-clean-icon-512.png",
+              "width": 512,
+              "height": 512
+            }
+          },
+          {
+            "@type": "HowTo",
+            "@id": "{{page.canonical_url | default: page.url | prepend: site.url}}/#howto",
+            "url": "{{page.canonical_url | default: page.url | prepend: site.url}}",
+            "name": "{{page.title}}",
+            "description": "{{page.description}}",
+            {% if page.featured_image %}
+            "image": {
+              "@type": "ImageObject",
+              "url": "{{page.featured_image}}",
+              "width": {{page.featured_image_width | default: 1200}},
+              "height": {{page.featured_image_height | default: 630}}
+            },
+            {% else %}
+            "image": {
+              "@type": "ImageObject",
+              "url": "{{site.url}}/favicon/nebula-clean-icon-512.png",
+              "width": 512,
+              "height": 512
+            },
+            {% endif %}
+            {% if page.author %}
+            "author": {
+              "@type": "Person",
+              "name": "{{page.author.name | default: page.author}}",
+              {% if page.author.url %}
+              "url": "{{page.author.url}}",
+              {% endif %}
+              "worksFor": { "@id": "{{site.url}}/#org" }
+            },
+            {% else %}
+            "author": { "@id": "{{site.url}}/#org" },
+            {% endif %}
+            "publisher": { "@id": "{{site.url}}/#org" },
+            "datePublished": "{{page.date_published | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "dateModified": "{{page.date_modified | default: page.date | default: site.time | date: '%Y-%m-%dT%H:%M:%S%z'}}",
+            "inLanguage": "{{page.lang | default: 'nl-NL'}}",
+            {% if page.estimated_time %}
+            "totalTime": "{{page.estimated_time}}",
+            {% endif %}
+            {% if page.difficulty %}
+            "difficultyLevel": "{{page.difficulty}}",
+            {% endif %}
+            {% if page.cost %}
+            "estimatedCost": {
+              "@type": "MonetaryAmount",
+              "currency": "EUR",
+              "value": "{{page.cost}}"
+            },
+            {% endif %}
+            {% if page.tools %}
+            "tool": [
+              {% for tool in page.tools %}
+              {
+                "@type": "HowToTool",
+                "name": "{{tool.name | default: tool}}"
+                {% if tool.url %}
+                ,"url": "{{tool.url}}"
+                {% endif %}
+              }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            {% if page.supplies %}
+            "supply": [
+              {% for supply in page.supplies %}
+              {
+                "@type": "HowToSupply",
+                "name": "{{supply.name | default: supply}}"
+                {% if supply.url %}
+                ,"url": "{{supply.url}}"
+                {% endif %}
+              }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            {% if page.steps %}
+            "step": [
+              {% for step in page.steps %}
+              {
+                "@type": "HowToStep",
+                "position": {{forloop.index}},
+                "name": "{{step.title | default: step.name}}",
+                "text": "{{step.description | default: step.text | strip_html}}",
+                {% if step.url %}
+                "url": "{{step.url}}",
+                {% endif %}
+                {% if step.image %}
+                "image": {
+                  "@type": "ImageObject",
+                  "url": "{{step.image}}",
+                  "contentUrl": "{{step.image}}"
+                },
+                {% endif %}
+                {% if step.video %}
+                "video": {
+                  "@type": "VideoObject",
+                  "contentUrl": "{{step.video}}"
+                },
+                {% endif %}
+                "direction": {
+                  "@type": "HowToDirection",
+                  "text": "{{step.instruction | default: step.text | strip_html}}"
+                }
+              }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            {% endif %}
+            "isAccessibleForFree": {{page.is_free | default: true}},
+            "copyrightNotice": "© {{page.date | default: site.time | date: '%Y'}} DigestPaper Publishing B.V."
+          }
+        ]
+      }
+    </script>
+  </head>
+
+  <body{% if page.body_class %} class="{{page.body_class}}"{% endif %}{% if page.microdata_itemscope %} {{page.microdata_itemscope}}{% else %} itemscope itemtype="https://schema.org/HowTo"{% endif %}>
+    <!-- Body content will be inserted here by the template engine -->
+  </body>
+</html>

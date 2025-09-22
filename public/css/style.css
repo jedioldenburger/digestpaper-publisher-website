@@ -3,44 +3,148 @@
    Consolidated from multiple CSS files - September 17, 2025
    ========================================================================== */
 
+/* Utility classes */
+.svg-sprite {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.inline-block-middle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero-stats {
+  margin-top: 1rem;
+}
+
+.hero-cta {
+  margin-top: 2rem;
+}
+
+.portfolio-section {
+  margin-top: 1rem;
+}
+
+.grid-item {
+  grid-template-columns: 1fr auto;
+}
+
+.auth-hidden {
+  display: none;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.responsive-logo {
+  max-width: 330px;
+  height: auto;
+}
+
+.auth-widget-container {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.auth-logged-out {
+  display: block;
+}
+
+.auth-logged-in {
+  display: none;
+}
+
+.auth-widget-container {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.auth-logged-out {
+  display: block;
+}
+
+.auth-logged-in {
+  display: none;
+}
+
 /* ==========================================================================
    Base styles and variables
    ========================================================================== */
+/* Accessible base tokens */
 :root {
   --background: #0f1419;
-  --fg: #e2e8f0;
-  --muted: #94a3b8;
-  --accent: #dcd9e2;
-  --accent-hover: #a297b9;
+  --fg: #ffffff; /* on dark background: pure white for 15:1 ratio */
+  --fg-alt: #f1f5f9;
+  --muted: #c4c9d2; /* improved from b0b8c4 for contrast vs card */
+  --muted-strong: #d8dde4;
+  --accent: #8856ff; /* higher saturation for focus elements */
+  --accent-hover: #a98dff;
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --ink: #251c54;
-  --card: #402f5070;
-  --card-hover: #56477445;
+  --ink: #0f1419; /* text placed on accent backgrounds */
+  --card: #1a2230; /* opaque to stabilize contrast & CLS */
+  --card-hover: #223041;
   --ring: #38bdf8;
-  --border: rgb(100 85 135 / 40%);
-  --shadow: rgb(0 0 0 / 24%);
+  --border: #314057;
+  --border-soft: #2a384b;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 50%);
-  --nav-bg: #ffffff;
-  --nav-fg: #0b1220;
+  --nav-bg: #121a24;
+  --nav-fg: #ffffff;
   --nav-ring: rgba(56, 189, 248, 0.55);
-  --menu-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
-  --accent-light: rgba(107, 33, 168, 0.1);
+  --menu-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+  --accent-light: rgba(136, 86, 255, 0.12);
+  --focus-outline: 2px solid #8856ff;
 }
 
 [data-theme="light"] {
-  --bg: #fff;
-  --fg: #1e293b;
-  --muted: #7a899f;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
+  --bg: #ffffff;
+  --fg: #111827; /* near-black */
+  --fg-alt: #1f2937;
+  --muted: #4b5563;
+  --muted-strong: #374151;
+  --accent: #5b21b6;
+  --accent-hover: #6d28d9;
   --ink: #ffffff;
-  --card: #fff;
+  --card: #ffffff;
   --card-hover: #f8fafc;
   --ring: #3b82f6;
-  --border: rgba(203, 213, 225, 0.6);
-  --shadow: rgba(0, 0, 0, 0.1);
+  --border: #d1d5db;
+  --border-soft: #e2e8f0;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --accent-light: rgba(91, 33, 182, 0.1);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --accent: #bf94ff;
+    --accent-hover: #d9c4ff;
+    --border: #466789;
+    --card: #16202a;
+    --card-hover: #1e2b38;
+  }
+  [data-theme="light"] {
+    --accent: #4c14ad;
+    --accent-hover: #5e1fd1;
+    --border: #334155;
+    --card: #ffffff;
+    --card-hover: #f1f5f9;
+  }
 }
 
 [data-theme="dark"] {
@@ -91,41 +195,124 @@ body {
   color: #fff;
 }
 
+/* Accessible link styling */
 a {
-  color: #171819;
+  color: var(--accent);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease;
 }
-
-a:hover {
+a:hover,
+a:focus-visible {
   color: var(--accent-hover);
   text-decoration: underline;
 }
-
-/* FA gradient */
-.fa-solid,
-.fa-brands,
-.fa-regular,
-i[class^="fa-"],
-i[class*=" fa-"] {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+a:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
 }
 
-.cta .fa-solid,
-.cta .fa-brands {
-  background: none;
-  -webkit-text-fill-color: #fff;
-  color: #fff;
+/* Icons turn white on hover - JavaScript handles the hover effect */
+.cta:hover svg,
+.cta:hover svg *,
+.cta:hover svg use,
+.cta:hover svg path,
+.cta:hover svg g,
+.cta:hover svg circle,
+.cta:hover svg rect,
+.cta:hover svg polygon,
+.nav__link:hover svg,
+.nav__link:hover svg *,
+.nav__link:hover svg use,
+.nav__link:hover svg path,
+.nav__link:hover svg g,
+.nav__link:hover svg circle,
+.nav__link:hover svg rect,
+.nav__link:hover svg polygon,
+.dropdown__link:hover svg,
+.dropdown__link:hover svg *,
+.dropdown__link:hover svg use,
+.dropdown__link:hover svg path,
+.dropdown__link:hover svg g,
+.dropdown__link:hover svg circle,
+.dropdown__link:hover svg rect,
+.dropdown__link:hover svg polygon {
+  fill: white !important;
+  color: white !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-text-fill-color: white !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* Additional icon targeting on hover - MAXIMUM SPECIFICITY */
+.cta:hover .icon,
+.cta:hover [class*="icon-"],
+.cta:hover i,
+.nav__link:hover .icon,
+.nav__link:hover [class*="icon-"],
+.nav__link:hover i,
+.dropdown__link:hover .icon,
+.dropdown__link:hover [class*="icon-"],
+.dropdown__link:hover i {
+  fill: white !important;
+  color: white !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-text-fill-color: white !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* Ensure enhanced icons turn white on hover - ULTIMATE PRIORITY */
+.cta:hover .enhanced-icon,
+.cta:hover .enhanced-icon *,
+.cta:hover .enhanced-icon use,
+.cta:hover svg[class*="enhanced"],
+.cta:hover svg[data-enhanced="true"],
+.cta:hover svg[data-enhanced="true"] *,
+.cta:hover svg[data-enhanced="true"] use,
+.nav__link:hover .enhanced-icon,
+.nav__link:hover .enhanced-icon *,
+.nav__link:hover .enhanced-icon use,
+.nav__link:hover svg[class*="enhanced"],
+.nav__link:hover svg[data-enhanced="true"],
+.nav__link:hover svg[data-enhanced="true"] *,
+.nav__link:hover svg[data-enhanced="true"] use,
+.dropdown__link:hover .enhanced-icon,
+.dropdown__link:hover .enhanced-icon *,
+.dropdown__link:hover .enhanced-icon use,
+.dropdown__link:hover svg[class*="enhanced"],
+.dropdown__link:hover svg[data-enhanced="true"],
+.dropdown__link:hover svg[data-enhanced="true"] *,
+.dropdown__link:hover svg[data-enhanced="true"] use {
+  fill: white !important;
+  color: white !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-text-fill-color: white !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* Force white on hover for all button content - NUCLEAR OPTION */
+.cta:hover *,
+.nav__link:hover *,
+.dropdown__link:hover * {
+  fill: white !important;
+  color: white !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-text-fill-color: white !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  contain: layout; /* Improve layout performance */
 }
 
 @media (max-width: 768px) {
@@ -151,7 +338,81 @@ i[class*=" fa-"] {
 
 /* Main content spacing to avoid sticky header overlap */
 main {
+  display: block !important;
+  visibility: visible !important;
   padding-top: 1rem;
+  min-height: calc(100vh - 8rem); /* More stable height calculation */
+  height: auto;
+  contain: layout style; /* Comprehensive containment */
+  will-change: auto; /* Optimize for layout stability */
+  position: relative; /* Establish positioning context */
+  overflow-x: hidden; /* Prevent horizontal shifts */
+}
+
+/* Prevent layout shifts from dynamic content */
+main * {
+  contain: layout style; /* Isolate layout changes */
+}
+
+/* Ensure all content sections are visible */
+.content-grid,
+.container,
+section,
+.hero,
+.grid,
+.card {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Force display for critical content elements */
+main#main,
+.hero,
+.grid,
+.card,
+section[id*="portfolio"],
+.brands,
+.portfolio-brand {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Fix grid display specifically */
+.grid {
+  display: grid !important;
+}
+
+/* Ensure stable container dimensions */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  contain: layout; /* Improve layout performance */
+  position: relative; /* Prevent reflow */
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Reserve space for dynamic content containers */
+#categories-container {
+  min-height: 400px;
+  contain: layout;
+}
+
+#articles-container {
+  min-height: 300px;
+  contain: layout;
+}
+
+#news-flash-content {
+  min-height: 60px;
+  contain: layout;
+}
+
+.flasher-content {
+  min-height: 60px;
+  contain: layout;
 }
 
 /* ==========================================================================
@@ -202,6 +463,59 @@ main {
   transform: scale(1.05);
 }
 
+/* Prevent font loading layout shifts */
+* {
+  font-display: swap; /* Use fallback fonts during load */
+}
+
+/* Font loading optimization - prevent FOUT/FOIT */
+@font-face {
+  font-family: "Montserrat";
+  font-display: swap;
+  font-weight: 400 800;
+  src: local("Montserrat");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-display: swap;
+  font-weight: 400 700;
+  src: local("Poppins");
+}
+
+/* Ensure stable image dimensions */
+img {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto; /* Let content determine aspect ratio */
+  display: block; /* Prevent inline spacing issues */
+}
+
+/* Specific image stability */
+.brand-figure img {
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+  display: block; /* Prevent layout shifts */
+}
+
+/* Navigation logo stability */
+.nav__logo-img,
+.logo img {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  display: block; /* Prevent layout shifts */
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -210,6 +524,25 @@ main {
   width: 2rem;
   height: 2rem;
   cursor: pointer;
+  contain: layout style;
+}
+
+/* Mobile menu toggle stable dimensions */
+#mobileMenuToggle {
+  width: 44px;
+  height: 44px;
+  contain: layout style;
+  position: relative;
+}
+
+#mobileMenuToggle .hamburger-line {
+  width: 28px;
+  height: 3px;
+  contain: layout;
+  display: block;
+  margin: 5px auto;
+  transition: all 0.3s ease;
+  background-color: currentColor;
 }
 
 .nav__burger,
@@ -660,6 +993,13 @@ nav {
   padding: 4rem 0 3rem;
   text-align: center;
   transform: none !important; /* Override AOS transform that causes overlap */
+  min-height: 600px; /* Prevent hero layout shift */
+  contain: layout; /* Isolate layout */
+  display: flex !important;
+  visibility: visible !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero h1 {
@@ -680,11 +1020,15 @@ nav {
 }
 
 .hero p {
-  color: var(--muted);
+  color: #d1d5db;
   font-size: 1.125rem;
   max-width: 640px;
   margin: 0 auto 1rem;
   line-height: 1.7;
+}
+
+[data-theme="light"] .hero p {
+  color: #374151;
 }
 
 .badge {
@@ -699,17 +1043,27 @@ nav {
   font-weight: 600;
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
   margin-bottom: 1rem;
+  min-height: 2.5rem; /* Prevent layout shift */
+  min-width: 6rem; /* Prevent layout shift */
+  justify-content: center;
 }
 
 .brand-figure {
   text-align: center;
   margin: 1rem auto 2rem;
+  width: 330px;
+  height: 330px;
+  contain: layout; /* Prevent layout shifts */
 }
 
 .brand-figure img {
   border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
 }
 
 .brand-figure img:hover {
@@ -755,7 +1109,7 @@ nav {
 }
 
 .card:hover {
-  background: var(--card-hover);
+  background: var(--card);
   border-color: #ffffff8c;
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
@@ -769,12 +1123,34 @@ nav {
   margin: 0 0 1rem;
   font-size: 1.375rem;
   font-weight: 700;
+  color: var(--fg);
 }
 
 .card p {
   color: var(--muted);
   margin-bottom: 1.5rem;
   line-height: 1.6;
+}
+[data-theme="light"] .card p {
+  color: var(--muted-strong);
+}
+
+/* Section title generic (add if missing) */
+.section-title,
+h2.section-title {
+  color: var(--fg);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+/* Note / subtitle text */
+.note {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+[data-theme="light"] .note {
+  color: var(--muted-strong);
 }
 
 .cta {
@@ -803,25 +1179,80 @@ nav {
 }
 
 .cta.secondary {
-  background: var(--card);
+  background: var(--background);
   color: var(--fg);
-  border: 2px solid rgba(56, 189, 248, 0.4);
-  box-shadow: 0 2px 8px var(--shadow);
+  border: 2px solid var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
-
-.cta.secondary:hover {
-  background: var(--card-hover);
-  border-color: rgba(56, 189, 248, 0.7);
+.cta.secondary:hover,
+.cta.secondary:focus-visible {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
   text-decoration: none;
 }
+[data-theme="light"] .cta.secondary {
+  color: var(--fg-alt);
+}
+[data-theme="light"] .cta.secondary:hover {
+  color: var(--ink);
+}
+.cta.secondary:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 3px;
+}
 
-.cta.secondary .fa-solid,
-.cta.secondary .fa-brands {
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+/* High contrast preference enhances secondary CTA visibility */
+@media (prefers-contrast: more) {
+  .cta.secondary {
+    background: var(--ink);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .cta.secondary:hover,
+  .cta.secondary:focus-visible {
+    background: var(--accent);
+    color: var(--ink);
+  }
+}
+
+/* Gradient text fallback: ensure readable color when gradients not applied */
+.gradient-text {
+  color: var(--accent);
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .gradient-text {
+    color: transparent;
+  }
+}
+
+/* Portfolio brand paragraph contrast */
+.portfolio-brand p {
+  color: var(--muted);
+}
+[data-theme="light"] .portfolio-brand p {
+  color: var(--muted-strong);
+}
+
+/* Newsletter input refinement */
+#newsletter input[type="email"] {
+  background: var(--card);
+  color: var(--fg);
+  border: 2px solid var(--border);
+}
+[data-theme="light"] #newsletter input[type="email"] {
+  background: var(--card);
+  color: var(--fg-alt);
+  border: 2px solid var(--border);
+}
+#newsletter input[type="email"]:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Fallback alert (ensure contrast) */
+#fallbackMessage {
+  color: var(--fg);
 }
 
 .card .cta {
@@ -846,16 +1277,18 @@ nav {
   background: var(--card);
   border: 1px solid rgba(100, 85, 135, 0.6);
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: center;
 }
+
+/* Light mode portfolio brand background - remove custom styling */
+/* Uses same background as cards via var(--card) */
 
 .portfolio-brand::before {
   content: "";
@@ -870,8 +1303,34 @@ nav {
 }
 
 .portfolio-brand:hover {
-  background: var(--card-hover);
+  background: rgba(64, 47, 80, 0.44) !important;
   border-color: #ffffff8c;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Enhanced portfolio brands hover - highest specificity */
+.portfolio-brand[data-enhanced="true"]:hover,
+li.portfolio-brand[data-enhanced="true"]:hover {
+  background: rgba(64, 47, 80, 0.44) !important;
+  border-color: #ffffff8c;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Light theme specific portfolio brand hover */
+[data-theme="light"] .portfolio-brand:hover {
+  background: #fff !important;
+  border-color: #0000008c;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Light theme enhanced portfolio brands hover */
+[data-theme="light"] .portfolio-brand[data-enhanced="true"]:hover,
+[data-theme="light"] li.portfolio-brand[data-enhanced="true"]:hover {
+  background: #fff !important;
+  border-color: #0000008c;
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
 }
@@ -880,6 +1339,7 @@ nav {
   opacity: 1;
 }
 
+/* Portfolio brand heading uses theme foreground for consistent contrast */
 .portfolio-brand h3 {
   font-weight: 700;
   font-size: 1.125rem;
@@ -887,12 +1347,12 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #000000;
+  color: var(--fg);
 }
 
 [data-theme="dark"] .portfolio-brand h3 {
-  color: #fff;
-  -webkit-text-fill-color: #fff;
+  color: var(--fg);
+  -webkit-text-fill-color: var(--fg);
   background: none;
 }
 
@@ -903,11 +1363,16 @@ nav {
   margin: 0.5rem 0;
 }
 
+/* Description text uses muted variable with theme override */
 .portfolio-brand p {
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.5;
   margin: 0;
+}
+
+[data-theme="light"] .portfolio-brand p {
+  color: var(--muted-strong, var(--muted));
 }
 
 .portfolio-brand svg {
@@ -916,6 +1381,27 @@ nav {
   fill: url(#iconGradient);
   vertical-align: middle;
   margin-right: 0.5rem;
+}
+
+/* Gradient text for special elements */
+/* Gradient text with solid fallback for users preferring reduced transparency or high contrast */
+.gradient-text {
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(
+    --accent
+  ); /* Fallback solid color for environments not supporting background-clip */
+}
+
+@media (prefers-contrast: more) {
+  .gradient-text {
+    background: none;
+    -webkit-text-fill-color: initial;
+    color: var(--accent-contrast, var(--accent));
+  }
 }
 
 /* ==========================================================================
@@ -1340,22 +1826,37 @@ footer::after {
 }
 
 .footer-socials .icon-btn {
-  padding: 0.5rem;
+  padding: 0.75rem;
   display: inline-flex;
-  border-radius: 0.5rem;
-  border: 1px solid transparent;
-  transition:
-    transform 120ms ease,
-    background-color 120ms ease,
-    border-color 120ms ease;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.footer-socials .icon-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease;
 }
 
 .footer-socials .icon-btn:hover,
 .footer-socials .icon-btn:focus-visible {
-  transform: translateY(-1px);
-  background: color-mix(in oklab, var(--accent, #2563eb) 12%, transparent);
-  border-color: color-mix(in oklab, var(--accent, #2563eb) 35%, transparent);
+  transform: translateY(-2px);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(107, 33, 168, 0.3);
   outline: none;
+}
+
+/* Dark mode social icons */
+[data-theme="dark"] .footer-socials .icon-btn:hover svg {
+  fill: black;
+}
+
+/* Light mode social icons */
+[data-theme="light"] .footer-socials .icon-btn:hover svg {
+  fill: white;
 }
 
 /* Utility nav (policies) */
@@ -1441,6 +1942,209 @@ footer::after {
 .footer-toplink a:focus-visible {
   text-decoration: underline;
   outline: none;
+}
+
+/* Contact email styling */
+.contact-email {
+  font-size: 0.9em;
+  opacity: 0.8;
+  margin-left: 0.5rem;
+}
+
+.contact-email:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+/* Dark mode styling */
+@media (prefers-color-scheme: dark) {
+  .contact-email {
+    color: white !important;
+  }
+}
+
+/* Light mode styling */
+@media (prefers-color-scheme: light) {
+  .contact-email {
+    color: black !important;
+  }
+}
+
+/* Manual theme class overrides */
+[data-theme="dark"] .contact-email {
+  color: white !important;
+}
+
+[data-theme="light"] .contact-email {
+  color: black !important;
+}
+
+.footer-contactpoint {
+  margin-bottom: 1rem;
+}
+
+.contact-item {
+  line-height: 1.4;
+}
+
+/* Contact section headers with gradient styling */
+.footer-contact-header {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-contact-header svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: url(#icon-gradient);
+  flex-shrink: 0;
+}
+
+/* Contact links styling */
+.footer-contactpoint a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-contactpoint a:hover {
+  text-decoration: none;
+  color: var(--accent-hover);
+}
+
+/* Contact email specific styling - keep white */
+.footer-contactpoint .contact-email {
+  color: white !important;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.footer-contactpoint .contact-email:hover {
+  color: white !important;
+  text-decoration: none;
+  opacity: 1;
+}
+
+/* Dark mode contact links - purple color */
+[data-theme="dark"] .footer-contactpoint a {
+  color: #b205b9;
+}
+
+[data-theme="dark"] .footer-contactpoint a:hover {
+  color: #d946ef;
+  text-decoration: none;
+}
+
+/* Keep email addresses white in dark mode */
+[data-theme="dark"] .footer-contactpoint .contact-email {
+  color: white !important;
+}
+
+[data-theme="dark"] .footer-contactpoint .contact-email:hover {
+  color: white !important;
+  text-decoration: none;
+}
+
+/* Light mode contact links */
+[data-theme="light"] .footer-contactpoint a {
+  color: #7c3aed;
+}
+
+[data-theme="light"] .footer-contactpoint a:hover {
+  color: #8b5cf6;
+  text-decoration: none;
+}
+
+/* Keep email addresses dark in light mode */
+[data-theme="light"] .footer-contactpoint .contact-email {
+  color: #000000 !important;
+}
+
+[data-theme="light"] .footer-contactpoint .contact-email:hover {
+  color: #000000 !important;
+  text-decoration: none;
+}
+
+/* Enhanced back to top button */
+.footer-toplink {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.footer-toplink a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.footer-toplink a:hover,
+.footer-toplink a:focus-visible {
+  background: var(--accent);
+  color: var(--ink);
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 33, 168, 0.3);
+  outline: none;
+}
+
+.footer-toplink svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode specific styling for TOP button */
+[data-theme="dark"] .footer-toplink a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .footer-toplink a:hover svg {
+  fill: url(#icon-gradient);
+}
+
+[data-theme="dark"] .footer-toplink a:hover {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Light mode specific styling for TOP button */
+[data-theme="light"] .footer-toplink a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .footer-toplink a:hover svg {
+  fill: url(#icon-gradient);
+}
+
+[data-theme="light"] .footer-toplink a:hover {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* ==========================================================================
@@ -1598,7 +2302,7 @@ footer::after {
   align-items: center;
   width: 44px;
   height: 44px;
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
   padding: 8px;
@@ -1617,18 +2321,29 @@ footer::after {
   outline-offset: 2px;
 }
 
+/* Force mobile menu visibility on small screens */
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: flex !important;
+    visibility: visible !important;
+  }
+}
+
 /* Hamburger lines */
 .hamburger-line {
-  width: 28px;
-  height: 3px;
-  background-color: var(--fg, #e2e8f0);
-  margin: 3px 0;
+  display: block !important;
+  width: 28px !important;
+  height: 3px !important;
+  background-color: var(--fg, #e2e8f0) !important;
+  margin: 3px 0 !important;
   transition: all 0.3s ease;
   border-radius: 2px;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 [data-theme="light"] .hamburger-line {
-  background-color: var(--fg, #1e293b);
+  background-color: var(--fg, #1e293b) !important;
 }
 
 /* Animated hamburger to X */
@@ -1739,9 +2454,13 @@ footer::after {
 }
 
 /* Show mobile menu on small screens */
+/* Show mobile menu on small screens */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: flex !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 1002 !important;
   }
 
   .desktop-nav,
@@ -1749,18 +2468,21 @@ footer::after {
     display: none !important;
   }
 
-  /* Hide logo and brand on mobile */
+  /* Show only hamburger menu on mobile, hide logo */
   .logo {
-    display: none;
+    display: none !important;
   }
 
   /* Make header relative for mobile nav positioning */
   header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
 
   .hdr {
     justify-content: center;
+    position: relative;
   }
 
   /* Ensure proper layout - center hamburger */
@@ -1769,6 +2491,17 @@ footer::after {
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    position: relative;
+  }
+
+  /* Ensure hamburger lines are visible */
+  .hamburger-line {
+    background-color: var(--fg) !important;
+    opacity: 1 !important;
+  }
+
+  [data-theme="light"] .hamburger-line {
+    background-color: #1e293b !important;
   }
 } /* Animation keyframes */
 @keyframes fadeInUp {
@@ -1800,5 +2533,790 @@ footer::after {
   .footer-socials,
   .footer-toplink {
     display: none !important;
+  }
+}
+
+/* ==========================================================================
+   CTA Button Icon Override - FINAL AUTHORITY
+   Must be at end of CSS to override SVG enhancer
+   ========================================================================== */
+/* Icons turn white on hover - comprehensive targeting */
+.cta:hover svg,
+.cta:hover svg *,
+.cta:hover svg use,
+.cta:hover svg path,
+.cta:hover svg g,
+.cta:hover svg circle,
+.cta:hover svg rect,
+.cta:hover svg polygon,
+.cta:hover .enhanced-icon,
+.cta:hover .enhanced-icon *,
+.cta:hover .enhanced-icon use,
+.cta:hover [role="img"],
+.cta:hover [aria-labelledby],
+.nav__link:hover svg,
+.nav__link:hover svg *,
+.nav__link:hover svg use,
+.nav__link:hover svg path,
+.nav__link:hover svg g,
+.nav__link:hover svg circle,
+.nav__link:hover svg rect,
+.nav__link:hover svg polygon,
+.nav__link:hover .enhanced-icon,
+.nav__link:hover .enhanced-icon *,
+.nav__link:hover .enhanced-icon use,
+.nav__link:hover [role="img"],
+.nav__link:hover [aria-labelledby],
+.dropdown__link:hover svg,
+.dropdown__link:hover svg *,
+.dropdown__link:hover svg use,
+.dropdown__link:hover svg path,
+.dropdown__link:hover svg g,
+.dropdown__link:hover svg circle,
+.dropdown__link:hover svg rect,
+.dropdown__link:hover svg polygon,
+.dropdown__link:hover .enhanced-icon,
+.dropdown__link:hover .enhanced-icon *,
+.dropdown__link:hover .enhanced-icon use,
+.dropdown__link:hover [role="img"],
+.dropdown__link:hover [aria-labelledby] {
+  fill: white !important;
+  color: white !important;
+  background: transparent !important;
+  background-image: none !important;
+  -webkit-text-fill-color: white !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* ==========================================================================
+   Newsletter form improvements for accessibility
+   ========================================================================== */
+#newsletter input[type="email"] {
+  color: var(--fg) !important;
+  background: var(--card) !important;
+  border: 2px solid #6b7280 !important;
+}
+
+[data-theme="light"] #newsletter input[type="email"] {
+  color: #1f2937 !important;
+  background: #ffffff !important;
+  border: 2px solid #6b7280 !important;
+}
+
+#newsletter input[type="email"]::placeholder {
+  color: #9ca3af !important;
+}
+
+[data-theme="light"] #newsletter input[type="email"]::placeholder {
+  color: #6b7280 !important;
+}
+
+/* ==========================================================================
+   Enhanced Footer styles
+   ========================================================================== */
+.enhanced-footer {
+  margin-top: 4rem;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+  padding: 0;
+  background: rgba(172, 60, 224, 0.811);
+  border: 3px solid #ffffff !important;
+  border-radius: 0rem;
+  position: relative;
+  box-shadow:
+    0 -10px 40px rgba(107, 33, 168, 0.15),
+    0 -5px 20px rgba(107, 33, 168, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px) saturate(20%);
+  transform: translateY(-5px);
+}
+
+[data-theme="dark"] .enhanced-footer {
+  background: rgba(0, 0, 0, 0.1);
+  border: 3px solid #ffffff !important;
+}
+
+[data-theme="light"] .enhanced-footer {
+  background: rgba(255, 255, 255, 0.81);
+  border: 3px solid #000000 !important;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Central Brand Section */
+.footer-brand-section {
+  text-align: center;
+  padding: 2rem 0 3rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 3rem;
+}
+
+.footer-brand-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.footer-brand-link:hover {
+  transform: translateY(-5px);
+  text-decoration: none;
+}
+
+.footer-logo-figure {
+  margin: 0 0 1rem 0;
+}
+
+.footer-logo-enhanced {
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(107, 33, 168, 0.3),
+    0 4px 16px rgba(107, 33, 168, 0.2);
+  transition: all 0.3s ease;
+}
+
+.footer-logo-enhanced:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow:
+    0 12px 48px rgba(107, 33, 168, 0.4),
+    0 6px 24px rgba(107, 33, 168, 0.3);
+}
+
+.footer-brand-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+}
+
+/* Mission Section */
+.footer-mission {
+  margin: 2rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-mission-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: var(--fg);
+}
+
+.mission-icon {
+  fill: url(#icon-gradient);
+  flex-shrink: 0;
+}
+
+.footer-mission-subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Social Media Enhanced */
+.footer-social-enhanced {
+  margin: 2rem 0 0;
+}
+
+.footer-social-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  color: var(--fg);
+}
+
+.footer-social-title svg {
+  fill: url(#icon-gradient);
+}
+
+.footer-socials-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: var(--fg);
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.social-btn:hover {
+  transform: translateY(-5px);
+  background: var(--gradient-primary);
+  border-color: transparent;
+  box-shadow: 0 10px 30px rgba(107, 33, 168, 0.3);
+  text-decoration: none;
+  color: white;
+}
+
+.social-btn:hover svg {
+  fill: white;
+}
+
+.social-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Content Grid */
+.footer-content-grid {
+  display: grid;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .footer-content-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-content-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* Footer Sections */
+.footer-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: fit-content;
+  min-height: auto;
+}
+
+.footer-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-icon {
+  fill: url(#icon-gradient);
+  flex-shrink: 0;
+}
+
+/* Contact Cards */
+.contact-cards {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.contact-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.contact-icon {
+  fill: url(#icon-gradient);
+  flex-shrink: 0;
+}
+
+.contact-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.enhanced-footer .contact-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.enhanced-footer .contact-link:hover {
+  color: var(--accent-hover);
+  text-decoration: none;
+}
+
+/* Enhanced contact email styling for new footer */
+.enhanced-footer .contact-email {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.enhanced-footer .contact-email:hover {
+  color: white !important;
+  text-decoration: none;
+}
+
+/* Policies Section */
+.policies-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 540px) {
+  .policies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+.policy-category {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.policy-category-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: var(--fg);
+}
+
+.policy-category-title svg {
+  fill: url(#icon-gradient);
+}
+
+.policy-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.policy-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.policy-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.policy-link svg {
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Company Section */
+.company-address {
+  font-style: normal;
+}
+
+.address-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.address-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.address-icon {
+  fill: url(#icon-gradient);
+}
+
+.address-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--fg);
+}
+
+.address-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.address-line {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.contact-info {
+  display: grid;
+  gap: 1rem;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.contact-method:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.contact-method-icon {
+  fill: url(#icon-gradient);
+  flex-shrink: 0;
+}
+
+.contact-method-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.contact-method-link:hover {
+  color: var(--accent-hover);
+  text-decoration: none;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem 0;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.copyright-section {
+  flex: 1;
+}
+
+.copyright-text {
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--fg);
+}
+
+.company-name {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.legal-text {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.scroll-top-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.scroll-top-btn:hover {
+  background: var(--gradient-primary);
+  border-color: transparent;
+  color: white;
+  text-decoration: none;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(107, 33, 168, 0.3);
+}
+
+.scroll-top-btn:hover svg {
+  fill: white;
+}
+
+.scroll-top-text {
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+
+/* Enhanced footer dark mode specific adjustments */
+[data-theme="dark"] .enhanced-footer .contact-link {
+  color: #b205b9;
+}
+
+[data-theme="dark"] .enhanced-footer .contact-link:hover {
+  color: #d946ef;
+}
+
+[data-theme="dark"] .enhanced-footer .contact-email {
+  color: white !important;
+}
+
+/* Additional utility classes for inline style removal */
+.nav-dropdown-svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hero-stats-section {
+  margin-top: 1rem;
+}
+
+.hero-cta-section {
+  margin-top: 2rem;
+}
+
+.portfolio-grid-section {
+  margin-top: 1rem;
+}
+
+.contact-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.contact-form-style {
+  margin-top: 1rem;
+}
+
+.contact-address {
+  margin-top: 2rem;
+}
+
+.contact-footer-style {
+  margin-top: 1rem;
+}
+
+.newsletter-container {
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.newsletter-card {
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.newsletter-subtitle {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.newsletter-input {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--card);
+  color: var(--fg);
+}
+
+.newsletter-message {
+  margin-top: 1rem;
+}
+
+.cta-group-centered {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.grid-margin-top {
+  margin-top: 1rem;
+}
+
+.portfolio-section-centered {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.portfolio-note {
+  margin-bottom: 1.5rem;
+}
+
+[data-theme="light"] .enhanced-footer .contact-link {
+  color: #7c3aed;
+}
+
+[data-theme="light"] .enhanced-footer .contact-link:hover {
+  color: #8b5cf6;
+}
+
+[data-theme="light"] .enhanced-footer .contact-email {
+  color: #000000 !important;
+}
+
+/* Mobile responsiveness for enhanced footer */
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .footer-brand-section {
+    padding: 1.5rem 0 2rem;
+  }
+
+  .footer-brand-title {
+    font-size: 2rem;
+  }
+
+  .footer-socials-grid {
+    gap: 1rem;
+  }
+
+  .footer-content-grid {
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .footer-section {
+    padding: 1.5rem;
+  }
+
+  .policies-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .footer-section {
+    padding: 1rem;
+  }
+
+  .footer-brand-title {
+    font-size: 1.75rem;
+  }
+
+  .footer-socials-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .social-btn {
+    padding: 0.75rem;
+    min-width: auto;
   }
 }

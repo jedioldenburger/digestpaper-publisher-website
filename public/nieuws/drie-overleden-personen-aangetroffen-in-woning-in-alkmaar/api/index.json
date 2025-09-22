@@ -1,0 +1,172 @@
+{
+  "title": "Drie overleden personen aangetroffen in woning in Alkmaar",
+  "original_title": "Drie overleden personen aangetroffen in woning in Alkmaar",
+  "link": "https://www.nu.nl/algemeen/6369367/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar.html",
+  "summary": "Drie overleden personen aangetroffen in woning in Alkmaar \n In een woning in Alkmaar zijn woensdag drie doden aangetroffen. Dat meldt de politie op X. Er wordt...",
+  "full_text": "<p>Drie overleden personen aangetroffen in woning in Alkmaar</p>\n<p>In een woning in Alkmaar zijn woensdag drie doden aangetroffen. Dat meldt de politie op X. Er wordt op dit moment onderzoek gedaan naar de oorzaak. De politie houdt rekening met alle scenario's.</p>\n<p>Vanmorgen ontving de politie een melding over een overlijden, waarna een onderzoek is gestart aan de Stikkelwaard in Alkmaar. Op dit moment voeren medewerkers van de Forensische Opsporing daar een overlijdensonderzoek uit. &amp;#8220;Het onderzoek is in volle gang&amp;#8221;, zegt de politie tegen NU.nl. &quot;Zodra nieuwe informatie beschikbaar is, zullen we dit delen&quot;, meldt de politie op X.&quot;</p>",
+  "timestamp": "2025-09-18T19:03:10+02:00",
+  "timestamp_iso": "2025-09-18T19:03:10+02:00",
+  "slug": "drie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+  "category": "Nieuws",
+  "tags": [
+    "Nederland",
+    "Nieuws",
+    "Actueel"
+  ],
+  "language": "Dutch",
+  "style": "Normal",
+  "processed": true,
+  "image_url": null,
+  "published": "2025-09-18T19:03:10+02:00",
+  "urls": {
+    "canonical": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+    "amp": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/amp",
+    "discussion": "https://digestpaper.com/forum/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+    "api": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/api/index.json",
+    "forum": "https://digestpaper.com/forum/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar"
+  },
+  "share": {
+    "email": "mailto:?subject=Drie+overleden+personen+aangetroffen+in+woning+in+Alkmaar&body=Drie+overleden+personen+aangetroffen+in+woning+in+Alkmaar%0A%0Ahttps%3A%2F%2Fdigestpaper.com%2Fnieuws%2Fdrie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+    "facebook": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdigestpaper.com%2Fnieuws%2Fdrie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+    "twitter": "https://twitter.com/intent/tweet?text=Drie+overleden+personen+aangetroffen+in+woning+in+Alkmaar&url=https%3A%2F%2Fdigestpaper.com%2Fnieuws%2Fdrie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+    "linkedin": "https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fdigestpaper.com%2Fnieuws%2Fdrie-overleden-personen-aangetroffen-in-woning-in-alkmaar&title=Drie+overleden+personen+aangetroffen+in+woning+in+Alkmaar",
+    "whatsapp": "https://wa.me/?text=Drie+overleden+personen+aangetroffen+in+woning+in+Alkmaar%20https%3A%2F%2Fdigestpaper.com%2Fnieuws%2Fdrie-overleden-personen-aangetroffen-in-woning-in-alkmaar"
+  },
+  "jsonld": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://digestpaper.com/#org",
+        "name": "DigestPaper.com",
+        "url": "https://digestpaper.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://digestpaper.com/favicon/favicon-192x192.png",
+          "width": 192,
+          "height": 192
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/cybersecurityad",
+          "https://x.com/digestpaper"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://digestpaper.com/#website",
+        "url": "https://digestpaper.com",
+        "name": "DigestPaper.com",
+        "publisher": {
+          "@id": "https://digestpaper.com/#org"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://digestpaper.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/#webpage",
+        "url": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+        "name": "Drie overleden personen aangetroffen in woning in Alkmaar",
+        "isPartOf": {
+          "@id": "https://digestpaper.com/#website"
+        },
+        "inLanguage": "nl-NL",
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://digestpaper.com/social/picture-article-digestpaper.png",
+          "width": 1200,
+          "height": 630
+        },
+        "breadcrumb": {
+          "@id": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/#breadcrumbs"
+        }
+      },
+      {
+        "@type": "NewsArticle",
+        "@id": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/#news",
+        "url": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+        "mainEntityOfPage": {
+          "@id": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/#webpage"
+        },
+        "headline": "Drie overleden personen aangetroffen in woning in Alkmaar",
+        "description": "Drie overleden personen aangetroffen in woning in Alkmaar In een woning in Alkmaar zijn woensdag drie doden aangetroffen.",
+        "articleSection": "Nieuws",
+        "keywords": "Nederland, Nieuws, Actueel",
+        "inLanguage": "nl-NL",
+        "isAccessibleForFree": true,
+        "datePublished": "2025-09-18T19:03:10+02:00",
+        "dateModified": "2025-09-18T19:03:10+02:00",
+        "image": [
+          {
+            "@type": "ImageObject",
+            "url": "https://digestpaper.com/social/picture-article-digestpaper.png",
+            "width": 1200,
+            "height": 630
+          }
+        ],
+        "publisher": {
+          "@type": "Organization",
+          "@id": "https://digestpaper.com/#org",
+          "name": "DigestPaper.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://digestpaper.com/favicon/favicon-192x192.png",
+            "width": 192,
+            "height": 192
+          }
+        },
+        "author": {
+          "@id": "https://digestpaper.com/#org"
+        },
+        "discussionUrl": "https://digestpaper.com/forum/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar",
+        "timeRequired": "PT2M",
+        "wordCount": 98,
+        "thumbnailUrl": "https://digestpaper.com/social/picture-article-digestpaper.png",
+        "interactionStatistic": [
+          {
+            "@type": "InteractionCounter",
+            "interactionType": {
+              "@type": "CommentAction"
+            },
+            "userInteractionCount": 0
+          }
+        ],
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": [
+            "h1.article-title",
+            "div.article-content p"
+          ]
+        },
+        "isBasedOn": "https://www.nu.nl/algemeen/6369367/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar.html"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar/#breadcrumbs",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://digestpaper.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Nieuws",
+            "item": "https://digestpaper.com/nieuws"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Drie overleden personen aangetroffen in woning in Alkmaar",
+            "item": "https://digestpaper.com/nieuws/drie-overleden-personen-aangetroffen-in-woning-in-alkmaar"
+          }
+        ]
+      }
+    ]
+  }
+}

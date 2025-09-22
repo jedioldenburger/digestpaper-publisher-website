@@ -469,6 +469,12 @@ class SVGIconEnhancer {
         category: "Data & Analytics",
         keywords: "statistieken, grafieken, data, visualisatie, trends",
       },
+      "icon-map-pin": {
+        title: "Locatie",
+        description: "Kaart en locatie — adres en geografische positie",
+        category: "Locatie & Navigatie",
+        keywords: "locatie, kaart, adres, positie, pin, map",
+      },
     };
 
     this.init();
