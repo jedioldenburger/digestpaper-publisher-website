@@ -1,0 +1,24 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "element-required-attributes": [
+      "error",
+      {
+        "footer[itemscope][itemtype*=\"schema.org/Organization\"]": [
+          "itemscope",
+          "itemtype"
+        ],
+        "article[itemscope][itemtype*=\"schema.org/NewsArticle\"]": [
+          "itemscope",
+          "itemtype"
+        ],
+        "nav[itemscope][itemtype*=\"schema.org/BreadcrumbList\"]": [
+          "itemscope",
+          "itemtype"
+        ]
+      }
+    ],
+    "require-sri": "off",
+    "no-missing-references": "off"
+  }
+}

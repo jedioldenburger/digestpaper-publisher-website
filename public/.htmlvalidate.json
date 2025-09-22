@@ -1,0 +1,9 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "require-sri": "off",
+    "no-missing-references": "off",
+    "missing-doctype": "error"
+  }
+}
+

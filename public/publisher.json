@@ -209,7 +209,7 @@
   },
 
   "assets": {
-    "webmanifest": "https://digestpaper.com/favicon/site.webmanifest",
+    "webmanifest": "https://digestpaper.com/site.webmanifest",
     "icons": [
       {
         "src": "https://digestpaper.com/favicon/nebula-clean-icon-16.png",

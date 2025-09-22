@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "require-sri": "off",
+    "no-missing-references": "off",
+    "doctype-html": "error",
+    "no-inline-style": "error",
+    "heading-level": "error"
+  }
+}

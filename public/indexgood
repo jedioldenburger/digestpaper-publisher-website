@@ -168,8 +168,14 @@
 <!-- Bing Webmaster Tools (fine to keep) -->
 <meta name="msvalidate.01" content="543824EE0D23E1E34C00EFCB1C398AE7">
 
-<!-- Self-hosted fonts instead of Google Fonts for better performance and no SRI needed -->
-<!-- Fonts are loaded via CSS @font-face rules in style.css -->
+<!-- Fonts CSS: keep the async swap + noscript -->
+<link rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap"
+      as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap">
+</noscript>
 
 <!-- Scripts: just defer -->
 <script defer src="/js/theme.js"></script>
@@ -835,14 +841,14 @@
       ],
 
       "subOrganization": [
-        { "@type": "Organization", "name": "Politie-Forum.nl", "url": "https://politie-forum.nl/", "logo": "https://politie-forum.nl/favicon.ico" },
-        { "@type": "Organization", "name": "Politie-NL.nl", "url": "https://politie-nl.nl/", "logo": "https://politie-nl.nl/favicon.ico" },
-        { "@type": "Organization", "name": "OnderzoekPortaal.nl", "url": "https://onderzoekportaal.nl/", "logo": "https://onderzoekportaal.nl/favicon.ico" },
-        { "@type": "Organization", "name": "OnderzoekPlatform.nl", "url": "https://onderzoekplatform.nl/", "logo": "https://onderzoekplatform.nl/favicon.ico" },
-        { "@type": "Organization", "name": "Cybersecurity-AI.eu", "url": "https://cybersecurity-ai.eu/", "logo": "https://cybersecurity-ai.eu/favicon.ico" },
-        { "@type": "Organization", "name": "HeadlinesMagazine.com", "url": "https://headlinesmagazine.com/", "logo": "https://headlinesmagazine.com/favicon.ico" },
-        { "@type": "Organization", "name": "HetNieuws.app", "url": "https://hetnieuws.app/", "logo": "https://hetnieuws.app/favicon.ico" },
-        { "@type": "Organization", "name": "CyberSecurityAD.com", "url": "https://cybersecurityad.com/", "logo": "https://cybersecurityad.com/favicon.ico" }
+        { "@type": "Organization", "name": "Politie-Forum.nl", "url": "https://politie-forum.nl/" },
+        { "@type": "Organization", "name": "Politie-NL.nl", "url": "https://politie-nl.nl/" },
+        { "@type": "Organization", "name": "OnderzoekPortaal.nl", "url": "https://onderzoekportaal.nl/" },
+        { "@type": "Organization", "name": "OnderzoekPlatform.nl", "url": "https://onderzoekplatform.nl/" },
+        { "@type": "Organization", "name": "Cybersecurity-AI.eu", "url": "https://cybersecurity-ai.eu/" },
+        { "@type": "Organization", "name": "HeadlinesMagazine.com", "url": "https://headlinesmagazine.com/" },
+        { "@type": "Organization", "name": "HetNieuws.app", "url": "https://hetnieuws.app/" },
+        { "@type": "Organization", "name": "CyberSecurityAD.com", "url": "https://cybersecurityad.com/" }
       ],
 
       "significantLink": [
@@ -1618,7 +1624,7 @@
       <nav class="mobile-nav" id="mobileNav" aria-label="Mobiele hoofdnavigatie" hidden>
         <div class="mobile-nav-content">
           <div class="mobile-nav-section">
-            <p class="mobile-nav-heading">Projects</p>
+            <h3>Projects</h3>
             <ul>
               <li><a href="/projects/">Overzicht</a></li>
               <li><a href="/projects/open-data/">Open Data</a></li>
@@ -1627,7 +1633,7 @@
           </div>
 
           <div class="mobile-nav-section">
-            <p class="mobile-nav-heading">Portfolio</p>
+            <h3>Portfolio</h3>
             <ul>
               <li><a href="/portfolio/">Overzicht</a></li>
               <li><a href="/portfolio/publications/">Publicaties</a></li>
@@ -1638,7 +1644,7 @@
           </div>
 
           <div class="mobile-nav-section">
-            <p class="mobile-nav-heading">Topics</p>
+            <h3>Topics</h3>
             <ul>
               <li><a href="/topics/">Overzicht</a></li>
               <li><a href="/topics/ai/">AI</a></li>
@@ -1648,7 +1654,7 @@
           </div>
 
           <div class="mobile-nav-section">
-            <p class="mobile-nav-heading">Tools &amp; Info</p>
+            <h3>Tools &amp; Info</h3>
             <ul>
               <li><a href="/tools/">Tools</a></li>
               <li><a href="/about/">Over Ons</a></li>
@@ -1700,14 +1706,8 @@
           <button type="button" class="auth-tab" data-tab="register">Registreren</button>
         </div>
 
-      <!-- Eén H1 met gescheiden subtitel -->
-      <h1 id="hero-title">
-        <span class="title">DiGiSTPAPER</span>
-      </h1>
-      <h2> <span class="subtitle">NEWS · GENERATOR · RESEARCH</span></h2>
-
         <div id="login-form" class="auth-form active">
-          <span class="auth-form-title">Inloggen</span>
+          <h2>Inloggen</h2>
           <form id="login-form-element">
             <div class="form-group">
               <label for="login-email">E-mail</label>
@@ -1840,6 +1840,11 @@
         <figcaption class="visually-hidden">DigestPaper</figcaption>
       </figure>
 
+      <!-- Eén H1 met gescheiden subtitel -->
+      <h1 id="hero-title">
+        <span class="title">DiGiSTPAPER</span>
+      </h1>
+      <h2> <span class="subtitle">NEWS · GENERATOR · RESEARCH</span></h2>
 
       <!-- Context en datum (machine-leesbaar + menselijk) -->
       <p class="note">
@@ -2202,7 +2207,6 @@
           <h2>Nieuwsbrief</h2>
           <p class="newsletter-subtitle">Blijf op de hoogte van het laatste nieuws</p>
           <form id="newsletterForm" class="newsletter-form">
-            <label for="newsletter-email" class="visually-hidden">E-mailadres voor nieuwsbrief</label>
             <input type="email" id="newsletter-email" placeholder="E-mailadres" autocomplete="email" required
                    class="newsletter-input">
             <button type="submit" class="cta">Inschrijven</button>

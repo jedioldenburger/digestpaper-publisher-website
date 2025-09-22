@@ -6,11 +6,19 @@
   "scripts": {
     "build": "node scripts/build-head.js",
     "watch": "nodemon --watch scripts --watch public scripts/build-head.js",
-    "lint": "node -e \"console.log('No lint configured')\""
+    "lint": "node -e \"console.log('No lint configured')\"",
+    "lint:html": "html-validate public/index.html -c .htmlvalidate.json",
+    "lint:mobile": "html-validate public/index.html -c .htmlvalidate.mobile.json",
+    "lint:microdata": "html-validate public/index.html -c .htmlvalidate.microdata.json",
+    "lint:seo": "html-validate public/index.html -c .htmlvalidate.seo.json",
+    "lint:jsonld": "node scripts/check-jsonld.js",
+    "lint:allbig": "html-validate public/index.html -c .htmlvalidate.all.json",
+    "lint:all": "npm run lint:html && npm run lint:mobile && npm run lint:microdata && npm run lint:seo && npm run lint:jsonld"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^7.0.1",
     "glob": "^11.0.3",
+    "html-validate": "^8.29.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.6.2",
     "svgo": "^4.0.0",

@@ -1,0 +1,21 @@
+{
+  "extends": ["html-validate:recommended", "html-validate:document"],
+  "rules": {
+    "element-required-attributes": [
+      "error",
+      {
+        "html": ["lang"],
+        "head": ["title"],
+        "meta[name=viewport]": ["content"]
+      }
+    ],
+    "heading-level": "error",
+    "no-inline-style": "error",
+    "require-sri": "error",
+    "input-missing-label": "error",
+    "no-missing-references": "error",
+    "no-redundant-role": "error",
+    "prefer-native-element": "error",
+    "no-deprecated-attr": "error"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "element-required-attributes": [
+      "error",
+      {
+        "html": ["lang"],
+        "meta[name=viewport]": ["content"]
+      }
+    ],
+    "meta-viewport": "error",
+    "no-inline-style": "error",
+    "heading-level": "error",
+    "require-sri": "off",
+    "no-missing-references": "off"
+  }
+}
