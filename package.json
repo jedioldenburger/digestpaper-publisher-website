@@ -5,7 +5,18 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build-head.js",
+    "build:css": "npx clean-css-cli public/css/style.css -o public/css/style.min.css",
+    "build:js": "npm run build:js:app && npm run build:js:theme && npm run build:js:consent && npm run build:js:category && npm run build:js:svg",
+    "build:js:app": "npx terser public/js/app.js --compress --mangle --output public/js/app.min.js",
+    "build:js:theme": "npx terser public/js/theme.js --compress --mangle --output public/js/theme.min.js",
+    "build:js:consent": "npx terser public/js/consent.js --compress --mangle --output public/js/consent.min.js",
+    "build:js:category": "npx terser public/js/category-enhancer.js --compress --mangle --output public/js/category-enhancer.min.js",
+    "build:js:svg": "npx terser public/js/svg-icon-enhancer.js --compress --mangle --output public/js/svg-icon-enhancer.min.js",
+    "build:min": "npm run build:css && npm run build:js",
     "watch": "nodemon --watch scripts --watch public scripts/build-head.js",
+    "watch:css": "nodemon --watch public/css/style.css --exec \"npm run build:css\"",
+    "watch:js": "nodemon --watch public/js --ignore public/js/*.min.js --exec \"npm run build:js\"",
+    "watch:min": "nodemon --watch public/css/style.css --watch public/js --ignore public/js/*.min.js --exec \"npm run build:min\"",
     "lint": "node -e \"console.log('No lint configured')\"",
     "lint:html": "html-validate public/index.html -c .htmlvalidate.json",
     "lint:mobile": "html-validate public/index.html -c .htmlvalidate.mobile.json",
@@ -22,7 +33,8 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.6.2",
     "svgo": "^4.0.0",
-    "svgstore": "^3.0.1"
+    "svgstore": "^3.0.1",
+    "terser": "^5.44.0"
   },
   "engines": {
     "node": ">=18.17"

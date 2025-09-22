@@ -351,8 +351,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       formTabs.forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
       const isLogin = tab.dataset.tab === "login";
-      if (loginForm) loginForm.style.display = isLogin ? "block" : "none";
-      if (registerForm) registerForm.style.display = isLogin ? "none" : "block";
+      // Batch style changes to reduce forced reflows
+      requestAnimationFrame(() => {
+        if (loginForm) loginForm.style.display = isLogin ? "block" : "none";
+        if (registerForm) registerForm.style.display = isLogin ? "none" : "block";
+      });
       qs(".modal-title").textContent = isLogin ? "Inloggen" : "Registreren";
     })
   );
@@ -447,8 +450,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       t.classList.toggle("active", t.dataset.tab === which)
     );
     const isLogin = which === "login";
-    if (loginForm) loginForm.style.display = isLogin ? "block" : "none";
-    if (registerForm) registerForm.style.display = isLogin ? "none" : "block";
+    // Batch style changes to reduce forced reflows
+    requestAnimationFrame(() => {
+      if (loginForm) loginForm.style.display = isLogin ? "block" : "none";
+      if (registerForm) registerForm.style.display = isLogin ? "none" : "block";
+    });
     qs(".modal-title").textContent = isLogin ? "Inloggen" : "Registreren";
   }
 
@@ -544,11 +550,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       onAuthStateChanged(window.firebaseAuth, (user) => {
         if (user) updateUserUI(user);
         else {
-          if (userLoggedIn) userLoggedIn.style.display = "none";
-          if (userLoggedOut) userLoggedOut.style.display = "block";
+          // Batch style changes to reduce forced reflows
+          requestAnimationFrame(() => {
+            if (userLoggedIn) userLoggedIn.style.display = "none";
+            if (userLoggedOut) userLoggedOut.style.display = "block";
+            if (headerLogin) headerLogin.style.display = "block";
+            if (headerUserAdmin) headerUserAdmin.style.display = "none";
+          });
           if (userWidgetTitle) userWidgetTitle.textContent = "Gratis Registreren!";
-          if (headerLogin) headerLogin.style.display = "block";
-          if (headerUserAdmin) headerUserAdmin.style.display = "none";
         }
       });
     }
@@ -565,13 +574,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (userAvatar) userAvatar.textContent = name.charAt(0).toUpperCase();
     if (userName) userName.textContent = name;
     if (userWidgetTitle) userWidgetTitle.textContent = `👤 ${name}`;
-    if (userLoggedIn) userLoggedIn.style.display = "block";
-    if (userLoggedOut) userLoggedOut.style.display = "none";
-    if (headerLogin) headerLogin.style.display = "none";
-    if (headerUserAdmin) {
-      headerUserAdmin.style.display = "flex";
-      headerUserAdmin.title = `Gebruiker Admin - ${name}`;
-    }
+    // Batch style changes to reduce forced reflows
+    requestAnimationFrame(() => {
+      if (userLoggedIn) userLoggedIn.style.display = "block";
+      if (userLoggedOut) userLoggedOut.style.display = "none";
+      if (headerLogin) headerLogin.style.display = "none";
+      if (headerUserAdmin) {
+        headerUserAdmin.style.display = "flex";
+        headerUserAdmin.title = `Gebruiker Admin - ${name}`;
+      }
+    });
     if (headerUserName) headerUserName.textContent = name;
   }
   function showAuthError(msg) {
@@ -736,8 +748,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       requestAnimationFrame(() => {
         const tickerWidth = ticker.scrollWidth / 2;
         const duration = tickerWidth * 0.02; // Adjust speed as needed
-        ticker.style.animation = `ticker ${duration}s linear infinite`;
-        ticker.style.width = "max-content";
+        
+        // Batch all style changes to reduce forced reflows
+        Object.assign(ticker.style, {
+          animation: `ticker ${duration}s linear infinite`,
+          width: "max-content"
+        });
         flasherContent.style.overflow = "hidden";
       });
 
@@ -895,8 +911,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     requestAnimationFrame(() => {
       const tickerWidth = ticker.scrollWidth / 2;
       const duration = tickerWidth * 0.02;
-      ticker.style.animation = `ticker ${duration}s linear infinite`;
-      ticker.style.width = "max-content";
+      
+      // Batch all style changes to reduce forced reflows
+      Object.assign(ticker.style, {
+        animation: `ticker ${duration}s linear infinite`,
+        width: "max-content"
+      });
       container.style.overflow = "hidden";
     });
   }

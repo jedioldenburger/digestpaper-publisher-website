@@ -124,7 +124,7 @@
 <meta name="dc.rights" content="Copyright 2025 DigestPaper Publishing B.V.">
 
 <!-- Performance & Resource Hints (duplicate font preconnects removed)
-<link rel="preload" href="/css/style.css" as="style">
+<link rel="preload" href="/css/style.min.css" as="style">
 <link rel="preload" href="/js/theme.js" as="script">
 <link rel="preload" href="/js/consent.js" as="script">
 <link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" as="font" type="font/woff2" crossorigin>
@@ -140,7 +140,7 @@
 
 
 
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.min.css">
 
   <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap"
@@ -151,8 +151,8 @@
   </noscript>
 
 <!-- Keep: CSS preload + apply -->
-<link rel="preload" href="/css/style.css" as="style">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="preload" href="/css/style.min.css" as="style">
+<link rel="stylesheet" href="/css/style.min.css">
 
 <!-- Drop these two unless profiling proved necessary -->
 <!-- <link rel="preload" href="/js/theme.js" as="script"> -->
@@ -172,8 +172,8 @@
 <!-- Fonts are loaded via CSS @font-face rules in style.css -->
 
 <!-- Scripts: just defer -->
-<script defer src="/js/theme.js"></script>
-<script defer src="/js/consent.js"></script>
+<script defer src="/js/theme.min.js"></script>
+<script defer src="/js/consent.min.js"></script>
 
 </head>
 <body>
@@ -2872,7 +2872,7 @@
 
   <!-- Enhanced JavaScript for professional interactions -->
   <script>
-    // Dynamic timestamp with current time and location
+    // Dynamic timestamp with current time and location - optimized to prevent forced reflows
     function updateTimestamp() {
       const lastUpdated = document.getElementById('last-updated');
       if (lastUpdated) {
@@ -2904,9 +2904,11 @@
           location = 'Amsterdam, Nederland';
         }
 
-        // Update the element
-        lastUpdated.setAttribute('datetime', isoDateTime);
-        lastUpdated.textContent = `${day} ${month} ${year}, ${hours}:${minutes} ${timeZoneShort} • ${location}`;
+        // Batch DOM updates to prevent forced reflows
+        requestAnimationFrame(() => {
+          lastUpdated.setAttribute('datetime', isoDateTime);
+          lastUpdated.textContent = `${day} ${month} ${year}, ${hours}:${minutes} ${timeZoneShort} • ${location}`;
+        });
       }
     }
 
@@ -3049,62 +3051,79 @@
 
 
 
-  <script type="module" src="/js/app.js"></script>
-  <script defer src="/js/category-enhancer.js"></script>
-  <script defer src="/js/svg-icon-enhancer.js"></script>
+  <script type="module" src="/js/app.min.js"></script>
+  <script defer src="/js/category-enhancer.min.js"></script>
+  <script defer src="/js/svg-icon-enhancer.min.js"></script>
+  <!-- Performance monitoring for forced reflow debugging -->
+  <script defer src="/js/performance-monitor.js"></script>
 
-  <!-- JSON-LD Portfolio Builder for SEO -->
+  <!-- JSON-LD Portfolio Builder for SEO - optimized to prevent forced reflows -->
   <script>
   (function () {
-    const tiles = [...document.querySelectorAll('#portfolio .portfolio-brand')];
-    if (!tiles.length) return;
+    // Defer DOM queries to prevent forced reflows during page load
+    requestAnimationFrame(() => {
+      const tiles = [...document.querySelectorAll('#portfolio .portfolio-brand')];
+      if (!tiles.length) return;
 
-    const items = tiles.map((el, i) => {
-      const url = el.querySelector('a[href]')?.href?.replace(/\/+$/, '');
-      const name = el.querySelector('h3 span, [itemprop="name"]')?.textContent?.trim();
-      const desc = el.querySelector('h4, [itemprop="description"], p')?.textContent?.trim();
-      if (!url || !name) return null;
+      const items = tiles.map((el, i) => {
+        const url = el.querySelector('a[href]')?.href?.replace(/\/+$/, '');
+        const name = el.querySelector('h3 span, [itemprop="name"]')?.textContent?.trim();
+        const desc = el.querySelector('h4, [itemprop="description"], p')?.textContent?.trim();
+        if (!url || !name) return null;
 
-      return {
-        "@type": "ListItem",
-        "position": i + 1,
-        "item": {
-          "@type": "WebSite",
-          "@id": url + "/#website",
-          "url": url + "/",
-          "name": name,
-          ...(desc ? { "description": desc } : {})
-        }
+        return {
+          "@type": "ListItem",
+          "position": i + 1,
+          "item": {
+            "@type": "WebSite",
+            "@id": url + "/#website",
+            "url": url + "/",
+            "name": name,
+            ...(desc ? { "description": desc } : {})
+          }
+        };
+      }).filter(Boolean);
+
+      const graph = {
+        "@context": "https://schema.org",
+        "@graph": [{
+          "@type": "ItemList",
+          "@id": location.origin + "/#portfolio",
+          "name": "Uitgeversportfolio & Platforms",
+          "itemListElement": items
+        }]
       };
-    }).filter(Boolean);
 
-    const graph = {
-      "@context": "https://schema.org",
-      "@graph": [{
-        "@type": "ItemList",
-        "@id": location.origin + "/#portfolio",
-        "name": "Uitgeversportfolio & Platforms",
-        "itemListElement": items
-      }]
-    };
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.textContent = JSON.stringify(graph);
+      document.head.appendChild(s);
 
-    const s = document.createElement('script');
-    s.type = 'application/ld+json';
-    s.textContent = JSON.stringify(graph);
-    document.head.appendChild(s);
-
-    console.log('[JSON-LD] Added portfolio ItemList with', items.length, 'websites');
+      console.log('[JSON-LD] Added portfolio ItemList with', items.length, 'websites');
+    });
   })();
   </script>
 
   <script>
+    // Dropdown menu handler - optimized to prevent forced reflows
     (() => {
-
-      const dropdowns = [...document.querySelectorAll('[data-dropdown]')];
-      function items(menu) { return [...menu.querySelectorAll('[role="menuitem"]')]; }
-      function open(btn, menu) { menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); }
-      function close(btn, menu) { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
-      function isOpen(menu) { return !menu.hidden; }
+      // Defer DOM queries to prevent forced reflows during page load
+      requestAnimationFrame(() => {
+        const dropdowns = [...document.querySelectorAll('[data-dropdown]')];
+        function items(menu) { return [...menu.querySelectorAll('[role="menuitem"]')]; }
+        function open(btn, menu) { 
+          requestAnimationFrame(() => {
+            menu.hidden = false; 
+            btn.setAttribute('aria-expanded', 'true'); 
+          });
+        }
+        function close(btn, menu) { 
+          requestAnimationFrame(() => {
+            menu.hidden = true; 
+            btn.setAttribute('aria-expanded', 'false'); 
+          });
+        }
+        function isOpen(menu) { return !menu.hidden; }
 
       dropdowns.forEach(dd => {
         const btn = dd.querySelector('button[aria-controls]');
@@ -3147,6 +3166,7 @@
       });
 
       // Theme toggle is handled by /js/theme.js
+      });
     })();
   </script>
   <script>
