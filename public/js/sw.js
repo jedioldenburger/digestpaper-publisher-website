@@ -1,7 +1,7 @@
 // DigestPaper Media Service Worker
-// Version: 2025-09-17-v4 (Switch to unminified style.css only)
+// Version: 2025-09-22-v5 (Performance optimizations + cache refresh)
 
-const CACHE_NAME = "digestpaper-v2025-09-17-v4";
+const CACHE_NAME = "digestpaper-v2025-09-22-v5";
 const urlsToCache = [
   "/",
   "/css/style.css",
@@ -22,18 +22,32 @@ self.addEventListener("install", function (event) {
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches aggressively
 self.addEventListener("activate", function (event) {
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
+      return Promise.all([
+        // Delete all old caches
+        ...cacheNames.map(function (cacheName) {
           if (cacheName !== CACHE_NAME) {
             console.log("Deleting old cache:", cacheName);
             return caches.delete(cacheName);
           }
+        }),
+        // Also clear any problematic cached analytics requests
+        caches.open(CACHE_NAME).then(cache => {
+          return cache.keys().then(requests => {
+            return Promise.all(
+              requests.map(request => {
+                if (request.url.includes('G-EQ5XCW4VZ7')) {
+                  console.log('Removing cached problematic analytics request:', request.url);
+                  return cache.delete(request);
+                }
+              })
+            );
+          });
         })
-      );
+      ]);
     })
   );
   // Claim all clients immediately

@@ -29,11 +29,15 @@ window.firebaseAnalytics = null;
 
 // Function to load Firebase modules dynamically only when explicitly needed
 window.initFirebase = async () => {
+  // Check if already initialized to prevent multiple instances
   if (window.firebaseReady) return window.firebaseReady;
+
+  // Prevent multiple simultaneous initialization attempts
+  if (window.firebaseInitializing) return window.firebaseInitializing;
 
   console.log("[Firebase] User requested Firebase - loading modules...");
 
-  window.firebaseReady = (async () => {
+  window.firebaseReady = window.firebaseInitializing = (async () => {
     try {
       const { initializeApp } = await import(
         "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
@@ -172,7 +176,7 @@ window.initFirebase = async () => {
 
 /* -------------------- UI zonder Firebase -------------------- */
 document.addEventListener("DOMContentLoaded", () => {
-  const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
   const mobileNav = document.getElementById("mobileNav");
   const scrollTopBtn = document.getElementById("scrollTop");
 
@@ -748,7 +752,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       requestAnimationFrame(() => {
         const tickerWidth = ticker.scrollWidth / 2;
         const duration = tickerWidth * 0.02; // Adjust speed as needed
-        
+
         // Batch all style changes to reduce forced reflows
         Object.assign(ticker.style, {
           animation: `ticker ${duration}s linear infinite`,
@@ -911,7 +915,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     requestAnimationFrame(() => {
       const tickerWidth = ticker.scrollWidth / 2;
       const duration = tickerWidth * 0.02;
-      
+
       // Batch all style changes to reduce forced reflows
       Object.assign(ticker.style, {
         animation: `ticker ${duration}s linear infinite`,
@@ -1888,6 +1892,226 @@ document.addEventListener("DOMContentLoaded", () => {
       brand.style.removeProperty("background");
     });
   });
+
+  // Initialize language functionality
+  initLanguageSelector();
 });
+
+/* ==========================================================================
+   Language Selector Functionality
+   ========================================================================== */
+function initLanguageSelector() {
+  const languageSelector = document.querySelector('[data-component="language-selector"]');
+  const languageTrigger = document.getElementById('languageToggle');
+  const languageMenu = document.getElementById('languageMenu');
+  const languageOptions = document.querySelectorAll('.language-option');
+
+  if (!languageSelector || !languageTrigger || !languageMenu) {
+    console.log('[Language] Language selector elements not found');
+    return;
+  }
+
+  // Get current language from localStorage or default to English
+  let currentLang = localStorage.getItem('preferred-language') || 'en';
+
+  // Detect language from URL if available
+  const urlLang = detectLanguageFromURL();
+  if (urlLang) {
+    currentLang = urlLang;
+    localStorage.setItem('preferred-language', currentLang);
+  }
+
+  // Initialize language on page load
+  setLanguage(currentLang);
+
+  // Toggle language menu
+  languageTrigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleLanguageMenu();
+  });
+
+  // Handle language selection
+  languageOptions.forEach(option => {
+    option.addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedLang = option.dataset.lang;
+      const targetUrl = option.dataset.url;
+
+      // Set active state
+      languageOptions.forEach(opt => opt.classList.remove('active'));
+      option.classList.add('active');
+
+      // Update language
+      setLanguage(selectedLang);
+      localStorage.setItem('preferred-language', selectedLang);
+
+      // Close menu
+      closeLanguageMenu();
+
+      // Navigate to language-specific URL if needed
+      if (targetUrl && targetUrl !== window.location.pathname) {
+        console.log(`[Language] Navigating to: ${targetUrl}`);
+        window.location.href = targetUrl;
+        return; // Exit early since we're navigating
+      }
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!languageSelector.contains(e.target)) {
+      closeLanguageMenu();
+    }
+  });
+
+  // Keyboard navigation
+  languageTrigger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleLanguageMenu();
+    } else if (e.key === 'Escape') {
+      closeLanguageMenu();
+    }
+  });
+
+  console.log(`[Language] Language selector initialized with language: ${currentLang}`);
+}
+
+function detectLanguageFromURL() {
+  const path = window.location.pathname;
+  if (path.startsWith('/de/')) return 'de';
+  if (path.startsWith('/nl/')) return 'nl';
+  if (path.startsWith('/en/')) return 'en'; // Legacy /en/ support
+  return 'en'; // Root path is English
+}
+
+function toggleLanguageMenu() {
+  const languageTrigger = document.getElementById('languageToggle');
+  const languageMenu = document.getElementById('languageMenu');
+
+  const isExpanded = languageTrigger.getAttribute('aria-expanded') === 'true';
+
+  if (isExpanded) {
+    closeLanguageMenu();
+  } else {
+    openLanguageMenu();
+  }
+}
+
+function openLanguageMenu() {
+  const languageTrigger = document.getElementById('languageToggle');
+  const languageMenu = document.getElementById('languageMenu');
+
+  languageTrigger.setAttribute('aria-expanded', 'true');
+  languageMenu.removeAttribute('hidden');
+  languageMenu.removeAttribute('aria-hidden'); // Remove aria-hidden completely when open
+}
+
+function closeLanguageMenu() {
+  const languageTrigger = document.getElementById('languageToggle');
+  const languageMenu = document.getElementById('languageMenu');
+
+  languageTrigger.setAttribute('aria-expanded', 'false');
+  languageMenu.setAttribute('hidden', '');
+  languageMenu.setAttribute('aria-hidden', 'true');
+}
+
+function setLanguage(lang) {
+  // Update HTML lang attribute
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('data-current-lang', lang);
+
+  // Update meta content-language
+  const contentLangMeta = document.querySelector('meta[name="content-language"]');
+  if (contentLangMeta) {
+    const langCodes = {
+      'en': 'en-US',
+      'de': 'de-DE',
+      'nl': 'nl-NL'
+    };
+    contentLangMeta.setAttribute('content', langCodes[lang] || 'en-US');
+  }
+
+  // Update all translatable elements
+  updateTranslatableElements(lang);
+
+  // Update current language display
+  const currentLanguageSpan = document.querySelector('.current-language');
+  if (currentLanguageSpan) {
+    const langData = currentLanguageSpan.dataset[lang];
+    if (langData) {
+      currentLanguageSpan.textContent = langData;
+    }
+  }
+
+  // Update active language option
+  const languageOptions = document.querySelectorAll('.language-option');
+  languageOptions.forEach(option => {
+    option.classList.toggle('active', option.dataset.lang === lang);
+  });
+
+  // Update canonical and hreflang URLs
+  updateLanguageURLs(lang);
+
+  console.log(`[Language] Language set to: ${lang}`);
+}
+
+function updateTranslatableElements(lang) {
+  // Update title
+  const title = document.querySelector('title');
+  if (title && title.dataset[lang]) {
+    title.textContent = title.dataset[lang];
+  }
+
+  // Update meta descriptions
+  const metaElements = document.querySelectorAll('meta[data-' + lang + ']');
+  metaElements.forEach(meta => {
+    const translatedContent = meta.dataset[lang];
+    if (translatedContent) {
+      meta.setAttribute('content', translatedContent);
+    }
+  });
+
+  // Update any other elements with language data attributes
+  const translatableElements = document.querySelectorAll('[data-' + lang + ']');
+  translatableElements.forEach(element => {
+    if (element.tagName === 'META' || element.tagName === 'TITLE') return; // Already handled
+
+    const translatedText = element.dataset[lang];
+    if (translatedText) {
+      element.textContent = translatedText;
+    }
+  });
+}
+
+function updateLanguageURLs(lang) {
+  // Update canonical URL
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) {
+    const baseUrl = 'https://digestpaper.com';
+    const langPath = lang === 'en' ? '' : `/${lang}`;
+    canonical.setAttribute('href', `${baseUrl}${langPath}/`);
+  }
+
+  // Update Open Graph URL
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  if (ogUrl) {
+    const baseUrl = 'https://digestpaper.com';
+    const langPath = lang === 'en' ? '' : `/${lang}`;
+    ogUrl.setAttribute('content', `${baseUrl}${langPath}/`);
+  }
+
+  // Update Open Graph locale
+  const ogLocale = document.querySelector('meta[property="og:locale"]');
+  if (ogLocale) {
+    const locales = {
+      'en': 'en_US',
+      'de': 'de_DE',
+      'nl': 'nl_NL'
+    };
+    ogLocale.setAttribute('content', locales[lang] || 'en_US');
+  }
+}
 
 /* End of Firebase features comment block */

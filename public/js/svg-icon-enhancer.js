@@ -475,6 +475,18 @@ class SVGIconEnhancer {
         category: "Locatie & Navigatie",
         keywords: "locatie, kaart, adres, positie, pin, map",
       },
+      "icon-comments": {
+        title: "Forum",
+        description: "Discussieforum en reacties — community interactie en conversaties",
+        category: "Forum & Community",
+        keywords: "forum, reacties, discussie, comments, community",
+      },
+      "icon-plane": {
+        title: "Tech & Innovatie",
+        description: "Technologie en innovatie — vliegtuig symbool voor vooruitgang en snelheid",
+        category: "Technologie",
+        keywords: "technologie, innovatie, vliegtuig, snelheid, vooruitgang",
+      },
     };
 
     this.init();
@@ -703,8 +715,11 @@ class SVGIconEnhancer {
   }
 }
 
-// Auto-initialize when script loads
-new SVGIconEnhancer();
+// Auto-initialize when script loads (singleton pattern)
+if (!window.svgIconEnhancerInitialized) {
+  window.svgIconEnhancerInitialized = true;
+  new SVGIconEnhancer();
+}
 
 // Also expose the class globally for manual use
 window.SVGIconEnhancer = SVGIconEnhancer;

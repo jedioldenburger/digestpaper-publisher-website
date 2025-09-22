@@ -19,7 +19,7 @@
     if (!btn) return;
     const next = mode === 'light' ? 'dark' : mode === 'dark' ? 'system' : 'light';
     const icon = resolved === 'dark' ? '🌙' : '☀️';
-    btn.textContent = `${icon} Thema (${mode})`;
+    btn.textContent = icon; // Only show icon, no text
     btn.setAttribute('aria-label', `Thema wisselen (huidig: ${mode})`);
     btn.dataset.next = next;
   }
@@ -29,7 +29,7 @@
     const btn = document.createElement('button');
     btn.id = 'theme-toggle';
     btn.type = 'button';
-    btn.style.cssText = 'position:fixed;right:1rem;bottom:1rem;z-index:60;padding:.5rem .75rem;border-radius:.75rem;background:#0b1220;color:#e5e7eb;border:1px solid rgba(56,189,248,.25)';
+    btn.style.cssText = 'position:fixed;right:1rem;top:1rem;z-index:999;padding:.5rem;border-radius:.5rem;background:#0b1220;color:#e5e7eb;border:1px solid rgba(56,189,248,.25);font-size:1.2rem;min-width:auto;';
     btn.addEventListener('click', onToggleClick);
     document.body.appendChild(btn);
   }

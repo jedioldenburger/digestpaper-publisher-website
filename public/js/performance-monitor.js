@@ -1,16 +1,16 @@
 // Performance monitoring to trace forced reflows
 (function() {
   'use strict';
-  
+
   // Only run in development or when explicitly enabled
-  const shouldMonitor = location.hostname === 'localhost' || 
+  const shouldMonitor = location.hostname === 'localhost' ||
                        location.search.includes('perf=true') ||
                        sessionStorage.getItem('perfMonitor') === 'true';
-  
+
   if (!shouldMonitor) return;
-  
+
   console.log('[PerfMonitor] 🔍 Monitoring forced reflows...');
-  
+
   // Track layout-triggering property access
   const layoutProperties = [
     'offsetWidth', 'offsetHeight', 'offsetTop', 'offsetLeft',
@@ -18,10 +18,10 @@
     'scrollWidth', 'scrollHeight', 'scrollTop', 'scrollLeft',
     'getComputedStyle', 'getBoundingClientRect'
   ];
-  
+
   // Store original methods
   const originals = {};
-  
+
   // Wrap Element.prototype methods
   layoutProperties.slice(0, -2).forEach(prop => {
     if (prop in Element.prototype) {
@@ -40,7 +40,7 @@
       });
     }
   });
-  
+
   // Wrap global functions
   originals.getComputedStyle = window.getComputedStyle;
   window.getComputedStyle = function(element, pseudoElt) {
@@ -53,7 +53,7 @@
     });
     return originals.getComputedStyle.call(this, element, pseudoElt);
   };
-  
+
   // Monitor style changes that could trigger reflows
   const originalStyleSetter = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'cssText')?.set;
   if (originalStyleSetter) {
@@ -70,7 +70,7 @@
       configurable: true
     });
   }
-  
+
   // Performance observer for layout events
   if ('PerformanceObserver' in window) {
     try {
@@ -86,13 +86,13 @@
       console.log('[PerfMonitor] PerformanceObserver not fully supported');
     }
   }
-  
+
   // Add toggle function
   window.togglePerfMonitor = function() {
     const current = sessionStorage.getItem('perfMonitor') === 'true';
     sessionStorage.setItem('perfMonitor', !current);
     location.reload();
   };
-  
+
   console.log('[PerfMonitor] ✅ Monitoring active. Use togglePerfMonitor() to disable.');
 })();
